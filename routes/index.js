@@ -42,7 +42,7 @@ router.get('/admin/lottery/:id', function(req, res) {
 });
 
 // delete lottery
-router.post('/admin/lottery/:id/remove', function(req, res) {
+router.get('/admin/lottery/:id/remove', function(req, res) {
 	var lotteryId = req.params.id;
 
 	Lottery.findByIdAndRemove(lotteryId, function(err) {
@@ -51,13 +51,14 @@ router.post('/admin/lottery/:id/remove', function(req, res) {
 });
 
 // change lottery status
-router.post('/admin/lottery/:id/status/', function(req, res) {
+router.get('/admin/lottery/:id/status/', function(req, res) {
 	var lotteryId = req.params.id;
 	var newStatus = req.query.s;
 	var allowedStatuses = [ 'open', 'draw', 'closed' ];
 
 	if (allowedStatuses.indexOf(newStatus) != -1) {
 		Lottery.findById(lotteryId, function(err, lottery) {
+
 			if (typeof lottery == 'undefined') {
 				res.redirect('/admin');
 			}
