@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  h1. Lotteries
+  ul
+    each lottery,i in lotteries
+      li= lottery.name
+
+  h2. Add a new lottery
+  form#add-new-lottery(name="addlottery", method="post", action="/addlottery")
+    input#lottery-name(type="text", placeholder="Lottery name", name="lottery_name")
+    button#btnSubmit(type="submit") Save
