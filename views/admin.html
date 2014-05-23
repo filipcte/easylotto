@@ -5,7 +5,7 @@
   <h1>Lotteries</h1>
   <ul>
   {% for lottery in lotteries %}
-    <li><a href="/admin/lottery/{{ lottery.id }}">{{ lottery.name }}</a></li>
+    <li><a href="/admin/lottery/{{ lottery.id }}">{{ lottery.name }}</a> [{{ lottery.status }}] [{{ lottery.created_at.toDateString() }}]</li>
   {% endfor %}
   </ul>
 

@@ -4,5 +4,13 @@
   
   <div><a href="/admin">&larr; Lotteries</a></div>
   <h1>{{ lottery.name }}</h1>
+  <div>[{{ lottery.status }}] [{{ lottery.created_at.toDateString() }}]</div>
+
+  <hr>
+
+  <a href="/admin/lottery/{{ lottery.id }}/remove">Delete lottery</a><br />
+  <a href="/admin/lottery/{{ lottery.id }}/status/?s=draw">End ticket sales</a><br />
+  <a href="/admin/lottery/{{ lottery.id }}/status/?s=closed">Close lottery</a><br />
+  <a href="/admin/lottery/{{ lottery.id }}/status/?s=open">Re-open lottery</a><br />
 
 {% endblock %}

@@ -4,8 +4,11 @@ var Schema   = mongoose.Schema;
 var lotterySchema = new Schema({
     name: String,
 
-    // open|drawings|closed
-    current_phase: String,
+    // open|draw|closed
+    status: {
+      type: String,
+      default: 'open'
+    },
     
     tickets_sold: [{
       description: String,
