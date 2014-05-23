@@ -28,6 +28,9 @@ node_modules
 **/.sass-cache
 **/.sass-cache/*
 
+# Compiled CSS
+/public/stylesheets/*
+
 # Components
 **/public/components
 **/public/components/*
