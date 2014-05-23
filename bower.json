@@ -1,0 +1,10 @@
+{
+  "name": "lotto",
+  "version": "0.0.1",
+  "homepage": "https://github.com/filipcte/lotto",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "foundation": "zurb/bower-foundation"
+  }
+}
