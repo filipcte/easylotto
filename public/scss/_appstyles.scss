@@ -1,7 +1,9 @@
 /* all app scss styles here */
 
-body {
-  padding: 50px;
+
+// Main header
+[role=banner] {
+	margin-bottom: 50px;
 }
 
 #draw-wrapper {

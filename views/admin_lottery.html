@@ -2,28 +2,35 @@
 
 {% block content %}
   
-  <div><a href="/admin">&larr; Lotteries</a></div>
-  <h1>{{ lottery.name }}</h1>
-  <div>[{{ lottery.status }}] [{{ lottery.created_at.toDateString() }}]</div>
-  <hr>
+  <div class="row">
+    <div class="small-12 columns">
+      <div><a href="/admin"><span class="fa fa-arrow-left"></span> Lotteries</a></div>
+      <h1>{{ lottery.name }}</h1>
+      <div>[{{ lottery.status }}] [{{ lottery.created_at.toDateString() }}]</div>
+      <hr>
 
-  <a href="/admin/lottery/{{ lottery.id }}/drawings">Start drawings</a><br />
+      <a href="/admin/lottery/{{ lottery.id }}/drawings">Start drawings</a><br />
 
-  <hr>
+      <hr>
 
-  <div>
-    <h3>Previous drawings</h3>
-    <ul>
-    {% for drawing in lottery.drawings %}
-      <li>{{ drawing.winning_ticket }} ({{ drawing.created_at.toDateString() }})</li>
-    {% endfor %}
-    </ul>
+      <div>
+        <h3>Previous drawings</h3>
+        <ul>
+        {% for drawing in lottery.drawings %}
+          <li>{{ drawing.winning_ticket }} ({{ drawing.created_at.toDateString() }})</li>
+        {% endfor %}
+        </ul>
+      </div>
+      
+      <hr>
+      
+      <ul class="actions no-bullet">
+        <li><a href="/admin/lottery/{{ lottery.id }}/remove">Delete lottery</a></li>
+        <li><a href="/admin/lottery/{{ lottery.id }}/status/?s=closed">Close lottery</a></li>  
+      </ul>
+    </div>
   </div>
   
-  <hr>
-
-  <a href="/admin/lottery/{{ lottery.id }}/remove">Delete lottery</a><br />
-  <a href="/admin/lottery/{{ lottery.id }}/status/?s=closed">Close lottery</a><br />
   
   <!-- <a href="/admin/lottery/{{ lottery.id }}/status/?s=draw">End ticket sales</a><br />
   <a href="/admin/lottery/{{ lottery.id }}/status/?s=open">Re-open lottery</a><br /> -->

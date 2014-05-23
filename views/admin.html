@@ -2,17 +2,28 @@
 
 {% block content %}
 
-  <h1>Lotteries</h1>
-  <ul>
-  {% for lottery in lotteries %}
-    <li><a href="/admin/lottery/{{ lottery.id }}">{{ lottery.name }}</a> [{{ lottery.status }}] [{{ lottery.created_at.toDateString() }}]</li>
-  {% endfor %}
-  </ul>
-
-  <h2>Add a new lottery</h2>
-  <form method="post" action="/admin/lottery/create">
-    <input type="text" name="lottery_name" placeholder="Lottery name" />
-    <input type="submit" value="Save" />
-  </form>
+  <div class="row">
+    <div class="small-12 medium-6 columns">
+      <h2>Lotteries</h2>
+      <ul class="no-bullet">
+        {% for lottery in lotteries %}
+          <li><a href="/admin/lottery/{{ lottery.id }}">{{ lottery.name }}</a> [{{ lottery.status }}] [{{ lottery.created_at.toDateString() }}]</li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="small-12 medium-6 columns">
+      <h2>Add a new lottery</h2>
+      <form method="post" action="/admin/lottery/create">
+        <div class="row collapse">
+          <div class="small-12 medium-10 columns">
+            <input type="text" name="lottery_name" placeholder="Lottery name">
+          </div>
+          <div class="small-12 medium-2 columns">
+            <input class="button postfix" type="submit" value="Save">
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
 
 {% endblock %}
