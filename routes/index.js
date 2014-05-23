@@ -42,7 +42,7 @@ router.get('/admin/lottery/:id', function(req, res) {
 });
 
 // delete lottery
-router.get('/admin/lottery/:id/remove', function(req, res) {
+router.post('/admin/lottery/:id/remove', function(req, res) {
 	var lotteryId = req.params.id;
 
 	Lottery.findByIdAndRemove(lotteryId, function(err) {
@@ -51,7 +51,7 @@ router.get('/admin/lottery/:id/remove', function(req, res) {
 });
 
 // change lottery status
-router.get('/admin/lottery/:id/status/', function(req, res) {
+router.post('/admin/lottery/:id/status/', function(req, res) {
 	var lotteryId = req.params.id;
 	var newStatus = req.query.s;
 	var allowedStatuses = [ 'open', 'draw', 'closed' ];
@@ -66,7 +66,7 @@ router.get('/admin/lottery/:id/status/', function(req, res) {
 
 			lottery.save(function() {
 				res.redirect('/admin/lottery/' + lotteryId);	
-			})
+			});
 		});   
 	}
 	else {
@@ -74,5 +74,45 @@ router.get('/admin/lottery/:id/status/', function(req, res) {
 	}
 });
 
+// lottery drawings
+router.get('/admin/lottery/:id/drawings', function(req, res) {
+	var lotteryId = req.params.id;
+
+	Lottery.findById(lotteryId, function(err, lottery) {
+		if (typeof lottery == 'undefined') {
+			res.redirect('/admin');
+		}
+
+		res.render('admin_lottery_draw', { lottery: lottery })
+	}); 
+});
+
+// lottery draw action
+router.get('/admin/lottery/:id/draw', function(req, res) {
+	var lotteryId = req.params.id;
+
+	Lottery.findById(lotteryId, function(err, lottery) {
+		if (typeof lottery == 'undefined') {
+			res.redirect('/admin');
+		}
+
+		// TO-DO: fancy randomness to determine winning ticket out of the sold tickets
+		// For now, hardcode a ticket
+		var winningTicket = 'Blue F 31';
+
+		// Save this drawing
+		var newDrawing = {
+			winning_ticket: winningTicket,
+			created_at: Date.now()
+		};
+
+		lottery.drawings.push(newDrawing);
+		
+		lottery.save(function() {
+			var response = { success: true, winningTicket: winningTicket };	
+			res.json(response);
+		});
+	}); 
+});
 
 module.exports = router;

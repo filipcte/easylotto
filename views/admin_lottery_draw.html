@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+  
+  <div><a href="/admin/lottery/{{ lottery.id }}">&larr; {{ lottery.name }}</a></div>
+
+  <hr>
+
+  <button id="trigger-draw" data-url="/admin/lottery/{{ lottery.id }}/draw">DRAW</button>
+
+  <hr>
+
+  <div id="draw-results">
+    <h3>Results</h3>
+    <div id="results"><ul></ul></div>
+  </div>
+
+{% endblock %}

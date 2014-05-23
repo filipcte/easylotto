@@ -9,6 +9,8 @@ var app = (function(document, $) {
 		_init = function() {
 			$(document).foundation();
 			_userAgentInit();
+
+			Lottery.init();
 		};
 
 	return {
