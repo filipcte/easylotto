@@ -1,4 +1,5 @@
-require( './db' );
+require('./models/user.model.js');
+require('./models/lottery.model.js');
 
 var express = require('express');
 var path = require('path');

@@ -5,12 +5,12 @@
   <h1>Lotteries</h1>
   <ul>
   {% for lottery in lotteries %}
-    <li>{{ lottery.name }}</li>
+    <li><a href="/admin/lottery/{{ lottery.id }}">{{ lottery.name }}</a></li>
   {% endfor %}
   </ul>
 
   <h2>Add a new lottery</h2>
-  <form method="post" action="/addlottery">
+  <form method="post" action="/admin/lottery/create">
     <input type="text" name="lottery_name" placeholder="Lottery name" />
     <input type="submit" value="Save" />
   </form>
