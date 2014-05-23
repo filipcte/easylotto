@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+  <h1>Lotteries</h1>
+  <ul>
+  {% for lottery in lotteries %}
+    <li>{{ lottery.name }}</li>
+  {% endfor %}
+  </ul>
+
+  <h2>Add a new lottery</h2>
+  <form method="post" action="/addlottery">
+    <input type="text" name="lottery_name" placeholder="Lottery name" />
+    <input type="submit" value="Save" />
+  </form>
+
+{% endblock %}
