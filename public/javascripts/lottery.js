@@ -4,8 +4,18 @@ var Lottery = {
 	init: function() {
 		// draw		
 		if ($('#trigger-draw').length) {
+			// overlay click handling
+			$('#draw-result-wrap').click(function() {
+				$(this).fadeOut();
+				$('#draw-result-wrap #draw-result span').html('');
+				$('#draw-result-wrap #draw-result img').show();
+			});
+
 			// click on the DRAW button
 			$('#trigger-draw').click(function() {
+				// show big overlay
+				$('#draw-result-wrap').show();
+
 				var url = $(this).data('url');
 
 				// Ajax request to perform the draw and get the winning ticket
@@ -25,7 +35,6 @@ var Lottery = {
 				});
 				return false;
 			});
-
 		}
 	},
 
@@ -40,7 +49,12 @@ var Lottery = {
 
 	// Once a draw ends, show the result (winning ticket) on the page
 	showDrawResult: function(winningTicket) {
-		var winningTicket = $('<li>' + winningTicket + '</li>');
-		$('#draw-results #results ul').prepend(winningTicket);
+		setTimeout(function() {
+			$('#draw-result-wrap #draw-result img').hide();
+			$('#draw-result-wrap #draw-result span').html(winningTicket);
+		}, 3000);
+
+		var winningTicketHtml = $('<li>' + winningTicket + '</li>');
+		$('#draw-results #results ul').prepend(winningTicketHtml);
 	}
 }
