@@ -12,7 +12,15 @@ var lotterySchema = new Schema({
     
     tickets_sold: [{
       description: String,
+      desc_without_number: String,
+      color: String,
+      letter: String,
+      number: String,
       created_at: Date
+    }],
+
+    tickets_for_draw: [{
+      description: String,
     }],
 
     drawings: [{
@@ -25,11 +33,6 @@ var lotterySchema = new Schema({
       default: Date.now
     }
 
-    // user: {
-    //   type: Schema.ObjectId,
-    //   ref: 'User',
-    //   default: 1
-    // }
 });
  
 mongoose.model('Lottery', lotterySchema);

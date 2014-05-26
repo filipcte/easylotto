@@ -4,29 +4,72 @@
   
   <div class="row">
     <div class="small-12 columns">
-      <div><a href="/admin"><span class="fa fa-arrow-left"></span> Lotteries</a></div>
       <h1>{{ lottery.name }}</h1>
-      <div>[{{ lottery.status }}] [{{ lottery.created_at.toDateString() }}]</div>
+      <div>{{ lottery.created_at.toDateString() }}</div>
       <hr>
 
-      <a href="/admin/lottery/{{ lottery.id }}/drawings">Start drawings</a><br />
+      <dl class="tabs" data-tab>
+        <dd class="active"><a href="#panel-tickets">Tickets</a></dd>
+        <dd><a href="#panel-drawings">Drawings</a></dd>
+      </dl>
+      <div class="tabs-content">
+        <div class="content active" id="panel-tickets">
+          <form id="add-sold-ticket" method="post" action="/admin/lottery/{{ lottery.id }}/sell">
+            <div class="row">
+              <div class="small-4 columns">
+                <label>Color</label>
+                <select name="color">
+                  <option value="blue">Blue</option>
+                  <option value="yellow">Yellow</option>
+                  <option value="green">Green</option>
+                  <option value="pink">Pink</option>
+                  <option value="white">White</option>
+                </select>
+              </div>
 
-      <hr>
+              <div class="small-2 columns">
+                <label>Letter
+                  <input type="text" name="letter" placeholder="Letter" />
+                </label>
+              </div>
 
-      <div>
-        <h3>Previous drawings</h3>
-        <ul>
-        {% for drawing in lottery.drawings %}
-          <li>{{ drawing.winning_ticket }} ({{ drawing.created_at.toDateString() }})</li>
-        {% endfor %}
-        </ul>
+              <div class="small-2 columns">
+                <label>Number or range
+                  <input type="text" name="number" placeholder="Number(s)" />
+                  <small>e.g. 1, 1-100</small>
+                </label>
+              </div>
+
+              <div class="small-2 columns">
+                <input class="button small" type="submit" value="Add ticket(s)">
+              </div>
+            </div>
+          </form>
+
+          <h3>Sold tickets</h3>
+          <ul id="sold-tickets-list">
+          {% for ticket in lottery.tickets_sold %}
+            <li>{{ ticket.description }} <!-- ({{ ticket.created_at.toDateString() }}) --></li>
+          {% endfor %}
+          </ul>
+        </div>
+
+        <div class="content" id="panel-drawings">
+          <a href="/admin/lottery/{{ lottery.id }}/drawings">Start drawings</a><br />
+          <h3>Previous drawings</h3>
+          <ul>
+          {% for drawing in lottery.drawings %}
+            <li>{{ drawing.winning_ticket }} <!-- ({{ drawing.created_at.toDateString() }}) --></li>
+          {% endfor %}
+          </ul>
+        </div>
+        
       </div>
-      
+
       <hr>
-      
       <ul class="actions no-bullet">
-        <li><a href="/admin/lottery/{{ lottery.id }}/remove">Delete lottery</a></li>
         <li><a href="/admin/lottery/{{ lottery.id }}/status/?s=closed">Close lottery</a></li>  
+        <li><a href="/admin/lottery/{{ lottery.id }}/remove">Delete lottery</a></li>
       </ul>
     </div>
   </div>

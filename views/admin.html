@@ -7,7 +7,7 @@
       <h2>Lotteries</h2>
       <ul class="no-bullet">
         {% for lottery in lotteries %}
-          <li><a href="/admin/lottery/{{ lottery.id }}">{{ lottery.name }}</a> [{{ lottery.status }}] [{{ lottery.created_at.toDateString() }}]</li>
+          <li><a href="/admin/lottery/{{ lottery.id }}">{{ lottery.name }}</a> <!-- [{{ lottery.status }}] --> [{{ lottery.created_at.toDateString() }}]</li>
         {% endfor %}
       </ul>
     </div>
