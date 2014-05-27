@@ -11,3 +11,4 @@ Lotto
 6. npm install -g grunt-cli
 7. grunt comp (after 3-4 seconds, close it)
 8. node server.js (keep it running)
+9. open http://localhost:3000/admin/ in the browser (locally)
