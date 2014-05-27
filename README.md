@@ -1,7 +1,7 @@
-lotto
+Lotto
 =====
 
-# Install
+## Install
 
 1. git clone git@github.com:filipcte/lotto.git
 2. npm install
