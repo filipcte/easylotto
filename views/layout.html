@@ -11,11 +11,35 @@
   <script src="/components/modernizr/modernizr.js"></script>
 </head>
 <body>
-  <header role="banner" class="top-bar">
-    <div class="name">
-      <h1><a href="/admin">Lotto</a></h1>
-    </div>
-  </header>
+  <nav class="top-bar" data-topbar>
+    <ul class="title-area">
+      <li class="name">
+        <h1><a href="/admin">Lotto</a></h1>
+      </li>
+    </ul>
+    {% if !userAuth %}
+    <section class="top-bar-section">
+      <!-- Right Nav Section -->
+      <ul class="right">
+        <li class="has-form">
+          <form method="post" action="/login">
+            <div class="row collapse">
+              <div class="large-4 columns">
+                <input type="text" name="email" placeholder="Email">
+              </div>
+              <div class="large-4 columns">
+                <input type="text" name="password" placeholder="Password">
+              </div>
+              <div class="large-4 columns">
+                <input type="submit" value="Login" class="button expand" />
+              </div>
+            </div>
+          </form>
+        </li>
+      </ul>
+    </section>
+    {% endif %}
+  </nav>
 
   <main role="main">
     {% block content %}{% endblock %}
@@ -23,6 +47,7 @@
 
   <script src="/components/jquery/dist/jquery.min.js"></script>
   <script src="/components/foundation/js/foundation.min.js"></script>
+  <script src="/components/jquery.hotkeys/jquery.hotkeys.js"></script>
   <script src="/javascripts/lottery.js"></script>
   <script src="/javascripts/global.js"></script>
 </body>

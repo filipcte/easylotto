@@ -2,6 +2,7 @@ require('./models/user.model.js');
 require('./models/lottery.model.js');
 
 var express = require('express');
+var session = require('express-session');
 var path = require('path');
 var favicon = require('static-favicon');
 var logger = require('morgan');
@@ -9,8 +10,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongo = require('mongodb');
 var swig = require('swig');
-
-var routes = require('./routes/index');
 
 var app = express();
 
@@ -20,9 +19,8 @@ app.set('view engine', 'html');
 app.set('views', __dirname + '/views');
 app.set('view cache', false);
 // To disable Swig's cache, do the following:
-swig.setDefaults({ cache: false });
 // NOTE: You should always cache templates in a production environment.
-// Don't leave both of these to `false` in production!
+swig.setDefaults({ cache: false });
 
 app.use(favicon());
 app.use(logger('dev'));
@@ -30,8 +28,17 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({ secret: 'superdupersecret' }))
 
+// global user session for views
+app.use(function(req, res, next) { 
+    res.locals.userAuth = req.session.user || '';
+    next();
+});
+
+var routes = require('./routes/index');
 app.use('/', routes);
+
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,19 +1,17 @@
 var mongoose = require('mongoose');
+var bcrypt   = require('bcrypt-nodejs');
 var Schema   = mongoose.Schema;
 
 /**
  * User Schema
  */
-var UserSchema = new Schema({
+var userSchema = new Schema({
 	email: {
 		type: String,
-		trim: true,
-		default: '',
-		match: [/.+\@.+\..+/, 'Please fill a valid email address']
+		trim: true
 	},
 	password: {
 		type: String,
-		default: '',
 	},
 	created_at: {
 		type: Date,
@@ -21,56 +19,19 @@ var UserSchema = new Schema({
 	}
 });
 
-/**
- * Hook a pre save method to hash the password
- */
-// UserSchema.pre('save', function(next) {
-// 	if (this.password && this.password.length > 6) {
-// 		this.salt = new Buffer(crypto.randomBytes(16).toString('base64'), 'base64');
-// 		this.password = this.hashPassword(this.password);
-// 	}
+// generating a hash
+userSchema.methods.generateHash = function(password) {
+  return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+};
 
-// 	next();
-// });
+// checking if password is valid
+userSchema.methods.validPassword = function(password) {
+ return bcrypt.compareSync(password, this.password);
+};
 
-/**
- * Create instance method for hashing a password
- */
-// UserSchema.methods.hashPassword = function(password) {
-// 	if (this.salt && password) {
-// 		return crypto.pbkdf2Sync(password, this.salt, 10000, 64).toString('base64');
-// 	} else {
-// 		return password;
-// 	}
-// };
+// generate a hash as a static method
+userSchema.statics.generatePassHash = function(password) {
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+};
 
-/**
- * Create instance method for authenticating user
- */
-// UserSchema.methods.authenticate = function(password) {
-// 	return this.password === this.hashPassword(password);
-// };
-
-/**
- * Find possible not used username
- */
-// UserSchema.statics.findUniqueUsername = function(username, suffix, callback) {
-// 	var _this = this;
-// 	var possibleUsername = username + (suffix || '');
-
-// 	_this.findOne({
-// 		username: possibleUsername
-// 	}, function(err, user) {
-// 		if (!err) {
-// 			if (!user) {
-// 				callback(possibleUsername);
-// 			} else {
-// 				return _this.findUniqueUsername(username, (suffix || 0) + 1, callback);
-// 			}
-// 		} else {
-// 			callback(null);
-// 		}
-// 	});
-// };
-
-mongoose.model('User', UserSchema);
+mongoose.model('User', userSchema);

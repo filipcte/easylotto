@@ -2,8 +2,41 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var Lottery = mongoose.model('Lottery');
+var User = mongoose.model('User');
 
 mongoose.connect('mongodb://localhost/lotto');
+
+// User seeder
+// TODO: remove this once signup is implemented
+router.get('/seed999', function(req, res) {
+	User.create({ email: 'kes@teknograd.no', password: User.generatePassHash('passw0rd')}, function(err, user) {
+		res.send('ok');
+	});
+});
+
+// login
+router.post('/login', function(req, res) {
+	var email = req.body.email;
+	var password = req.body.password;
+
+	User.findOne({ email: email }, function(err, user) {
+		if (user === null) {
+			res.redirect('/');
+		}
+		else {
+			if (user.validPassword(password)) {
+				 req.session.regenerate(function(){
+	         req.session.user = user;
+	         res.redirect('/admin');
+	      });
+			}
+			else {
+				res.redirect('/');
+			}
+		}
+	});
+});
+
 
 // home
 router.get('/', function(req, res) {
@@ -12,6 +45,8 @@ router.get('/', function(req, res) {
 
 // admin page (lottery listing)
 router.get('/admin', function(req, res) {
+	//if (!req.session.user) { res.redirect('/'); }
+
 	Lottery.find(function(err, lotteries, count) {
 		res.render('admin', { lotteries: lotteries })
 	}); 
@@ -19,7 +54,10 @@ router.get('/admin', function(req, res) {
 
 // create a new lottery
 router.post('/admin/lottery/create', function(req, res) {
+	//if (!req.session.user) { res.redirect('/'); }
+
 	var lotteryName = req.body.lottery_name;
+
 
 	new Lottery({ 
 		name: lotteryName
@@ -30,6 +68,8 @@ router.post('/admin/lottery/create', function(req, res) {
 
 // view lottery page
 router.get('/admin/lottery/:id', function(req, res) {
+	//if (!req.session.user) { res.redirect('/'); }
+
 	var lotteryId = req.params.id;
 
 	Lottery.findById(lotteryId, function(err, lottery) {
@@ -52,6 +92,8 @@ router.get('/admin/lottery/:id', function(req, res) {
 
 // delete lottery
 router.get('/admin/lottery/:id/remove', function(req, res) {
+	//if (!req.session.user) { res.redirect('/'); }
+
 	var lotteryId = req.params.id;
 
 	Lottery.findByIdAndRemove(lotteryId, function(err) {
@@ -61,6 +103,8 @@ router.get('/admin/lottery/:id/remove', function(req, res) {
 
 // change lottery status
 router.get('/admin/lottery/:id/status/', function(req, res) {
+	//if (!req.session.user) { res.redirect('/'); }
+
 	var lotteryId = req.params.id;
 	var newStatus = req.query.s;
 	var allowedStatuses = [ 'open', 'draw', 'closed' ];
@@ -86,6 +130,8 @@ router.get('/admin/lottery/:id/status/', function(req, res) {
 
 // lottery drawings
 router.get('/admin/lottery/:id/drawings', function(req, res) {
+	//if (!req.session.user) { res.redirect('/'); }
+
 	var lotteryId = req.params.id;
 
 	Lottery.findById(lotteryId, function(err, lottery) {
@@ -99,6 +145,8 @@ router.get('/admin/lottery/:id/drawings', function(req, res) {
 
 // lottery draw action
 router.get('/admin/lottery/:id/draw', function(req, res) {
+	//if (!req.session.user) { res.redirect('/'); }
+
 	var lotteryId = req.params.id;
 
 	Lottery.findById(lotteryId, function(err, lottery) {
@@ -131,8 +179,10 @@ router.get('/admin/lottery/:id/draw', function(req, res) {
 	}); 
 });
 
-// lottery draw action
+// lottery sell tickets
 router.post('/admin/lottery/:id/sell', function(req, res) {
+	//if (!req.session.user) { res.redirect('/'); }
+
 	var lotteryId = req.params.id;
 
 	Lottery.findById(lotteryId, function(err, lottery) {

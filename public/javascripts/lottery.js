@@ -4,25 +4,16 @@ var Lottery = {
 	init: function() {
 		// draw		
 		if ($('#trigger-draw').length) {
+
+			$(document).bind('keydown', 'esc', Lottery.endDraw);
+			$(document).bind('keydown', 'return', Lottery.triggerDraw);
+
 			// overlay click handling
-			$('#draw-result-wrap').click(function() {
-				$(this).fadeOut();
-				$('#draw-result-wrap #draw-result span').html('');
-				$('#draw-result-wrap #draw-result img').show();
-			});
+			$('#draw-result-wrap').click(Lottery.triggerDraw);
 
 			// click on the DRAW button
 			$('#trigger-draw').click(function() {
-				// show big overlay
-				$('#draw-result-wrap').show();
-
-				var url = $(this).data('url');
-
-				// Ajax request to perform the draw and get the winning ticket
-				$.getJSON(url, function(response) {
-					Lottery.showDrawResult(response.winningTicket);
-				});
-
+				Lottery.triggerDraw();
 				return false;
 			});
 		}
@@ -38,6 +29,25 @@ var Lottery = {
 		}
 	},
 
+	endDraw: function() {
+		$('#draw-result-wrap').fadeOut();
+	},
+
+	triggerDraw: function() {
+		$('#draw-result-wrap #draw-result div').html('');
+		$('#draw-result-wrap #draw-result img').show();
+
+		// show big overlay
+		$('#draw-result-wrap').show();
+
+		var url = $('#trigger-draw').data('url');
+		
+		// Ajax request to perform the draw and get the winning ticket
+		$.getJSON(url, function(response) {
+			Lottery.showDrawResult(response.winningTicket);
+		});
+	},
+
 	// After a ticket has been sold, inject it into DOM
 	showSoldTickets: function(tickets) {
 		var ticketsHtml = '';
@@ -51,10 +61,48 @@ var Lottery = {
 	showDrawResult: function(winningTicket) {
 		setTimeout(function() {
 			$('#draw-result-wrap #draw-result img').hide();
-			$('#draw-result-wrap #draw-result span').html(winningTicket);
+
+			var ticket_parts = winningTicket.split(' ');
+
+			$.each(ticket_parts, function(i, part) {
+				// change overlay bg color according to winning ticket's color
+				if (i == 0) {
+					Lottery.changeBgColor(part);
+				}
+
+				$('<span class="draw-result-part" id="result-part-' + i + '">' + part + '</span>').appendTo($('#draw-result-wrap #draw-result div'));
+
+				setTimeout(function() {
+					$('#draw-result-wrap #draw-result div span#result-part-' + i).fadeIn('slow');	
+				}, 1500 * (i + 1));
+				
+			});
 		}, 3000);
 
 		var winningTicketHtml = $('<li>' + winningTicket + '</li>');
-		$('#draw-results #results ul').prepend(winningTicketHtml);
+		$('#draw-results').prepend(winningTicketHtml);
+	},
+
+	changeBgColor: function(color) {
+		var newColor = '#FFFF00';
+
+		if (color == 'blue') {
+			newColor = '#1E90FF';
+		}
+		else if (color == 'yellow') {
+			newColor = '#FFFF00';
+		}
+		else if (color == 'green') {
+			newColor = '#32CD32';
+		}
+		else if (color == 'white') {
+			newColor = '#fff';
+		}
+		else if (color == 'pink') {
+			newColor = '#FFB6C1';
+		}
+
+		$('#draw-result-wrap').css('background-color', newColor);
+
 	}
 }

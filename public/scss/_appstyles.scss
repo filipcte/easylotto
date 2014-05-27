@@ -2,7 +2,7 @@
 
 
 // Main header
-[role=banner] {
+.top-bar {
 	margin-bottom: 30px;
 }
 
@@ -18,12 +18,17 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: yellow;
+  background: #eee;
   text-align: center;
 }
 
 #draw-result {
-  margin-top: 150px;
-  font-size: 100px;
+  margin-top: 170px;
+  font-size: 120px;
   font-weight: bold;
+}
+
+.draw-result-part {
+  display: none;
+  padding-right: 20px;
 }

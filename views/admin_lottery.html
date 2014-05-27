@@ -49,17 +49,17 @@
           <h3>Sold tickets</h3>
           <ul id="sold-tickets-list">
           {% for ticket in lottery.tickets_sold %}
-            <li>{{ ticket.description }} <!-- ({{ ticket.created_at.toDateString() }}) --></li>
+            <li>{{ ticket.description }}</li>
           {% endfor %}
           </ul>
         </div>
 
         <div class="content" id="panel-drawings">
-          <a href="/admin/lottery/{{ lottery.id }}/drawings">Start drawings</a><br />
-          <h3>Previous drawings</h3>
-          <ul>
+          <button class="button large expand" id="trigger-draw" data-url="/admin/lottery/{{ lottery.id }}/draw">DRAW</button>
+          <h3>Winners</h3>
+          <ul id="draw-results">
           {% for drawing in lottery.drawings %}
-            <li>{{ drawing.winning_ticket }} <!-- ({{ drawing.created_at.toDateString() }}) --></li>
+            <li>{{ drawing.winning_ticket }}</li>
           {% endfor %}
           </ul>
         </div>
@@ -74,6 +74,9 @@
     </div>
   </div>
   
+  <div id="draw-result-wrap">
+    <div id="draw-result"><img src="/images/loader.gif" /><div></div></div>
+  </div>
   
   <!-- <a href="/admin/lottery/{{ lottery.id }}/status/?s=draw">End ticket sales</a><br />
   <a href="/admin/lottery/{{ lottery.id }}/status/?s=open">Re-open lottery</a><br /> -->
