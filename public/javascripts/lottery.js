@@ -70,7 +70,7 @@ var Lottery = {
 					Lottery.changeBgColor(part);
 				}
 
-				$('<span class="draw-result-part" id="result-part-' + i + '">' + part + '</span>').appendTo($('#draw-result-wrap #draw-result div'));
+				$('<span class="draw-result-part" id="result-part-' + i + '">' + Lottery.capitaliseFirstLetter(part) + '</span>').appendTo($('#draw-result-wrap #draw-result div'));
 
 				setTimeout(function() {
 					$('#draw-result-wrap #draw-result div span#result-part-' + i).fadeIn('slow');	
@@ -86,23 +86,26 @@ var Lottery = {
 	changeBgColor: function(color) {
 		var newColor = '#FFFF00';
 
-		if (color == 'blue') {
+		if (color == 'blå') {
 			newColor = '#1E90FF';
 		}
-		else if (color == 'yellow') {
+		else if (color == 'gul') {
 			newColor = '#FFFF00';
 		}
-		else if (color == 'green') {
+		else if (color == 'grønn') {
 			newColor = '#32CD32';
 		}
 		else if (color == 'white') {
 			newColor = '#fff';
 		}
-		else if (color == 'pink') {
+		else if (color == 'rosa') {
 			newColor = '#FFB6C1';
 		}
 
 		$('#draw-result-wrap').css('background-color', newColor);
+	},
 
+	capitaliseFirstLetter: function(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
 	}
 }
