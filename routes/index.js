@@ -194,7 +194,7 @@ router.get('/admin/lottery/:id/draw', function(req, res) {
 			lottery.drawings.push(newDrawing);
 
 			lottery.save(function() {
-				var response = { success: true, winningTicket: winningTicket.description, colorHex: winningTicket.color_hex };	
+				var response = { success: true, winningTicket: winningTicket.description, colorHex: colorHex };	
 				res.json(response);
 			});	
 		}
