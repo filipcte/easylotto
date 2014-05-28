@@ -48,9 +48,9 @@
 
           <h3>Sold tickets</h3>
           <ul id="sold-tickets-list" class="small-block-grid-3 colorful-tickets">
-          {% for ticket in lottery.tickets_sold %}
-            <li><a style="background-color: {{ ticket.color_hex }};" href="/admin/lottery/{{ lottery.id }}/remove-ticket/{{ ticket.id }}">{{ ticket.description }}<span class="fa fa-times"></span></a></li>
-          {% endfor %}
+            {% for ticket in lottery.tickets_sold %}
+              <li><a style="background-color: {{ ticket.color_hex }};" href="/admin/lottery/{{ lottery.id }}/remove-ticket/{{ ticket.id }}">{{ ticket.description }}<span class="fa fa-times"></span></a></li>
+            {% endfor %}
           </ul>
         </div>
 
@@ -68,7 +68,7 @@
       <hr>
 
       <ul class="actions no-bullet">
-        <li><a href="/admin/lottery/{{ lottery.id }}/remove"><i class="fa fa-trash-o"></i> Delete lottery</a></li>
+        <li><a class="delete" href="/admin/lottery/{{ lottery.id }}/remove"><i class="fa fa-trash-o"></i> Delete lottery</a></li>
       </ul>
     </div>
   </div>
