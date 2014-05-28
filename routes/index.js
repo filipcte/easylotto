@@ -56,10 +56,16 @@ router.post('/admin/lottery/create', function(req, res) {
 	//if (!req.session.user) { res.redirect('/'); }
 
 	var lotteryName = req.body.lottery_name;
-
+	var defaultColors = [
+		{ name: 'blå', hex: '#1E90FF' },
+		{ name: 'gul', hex: '#FFFF00' },
+		{ name: 'grønn', hex: '#32CD32' },
+		{ name: 'rosa', hex: '#FFB6C1' }
+	];
 
 	new Lottery({ 
-		name: lotteryName
+		name: lotteryName,
+		ticket_colors: defaultColors
 	}).save(function(err, lottery, count) {
 		res.redirect('/admin/lottery/' + lottery.id);
 	});  
@@ -200,6 +206,14 @@ router.post('/admin/lottery/:id/sell', function(req, res) {
 		var numberRange = req.body.number;
 		var descWithoutNumber = color + ' ' + letter;
 		var soldTickets = [];
+		var colorHex = '#eeeeee';
+
+		// determine hex color for chosen color
+		for (var i in lottery.ticket_colors) {
+			if (lottery.ticket_colors[i].name == color) {
+				colorHex = lottery.ticket_colors[i].hex;
+			}
+		}
 
 		// check if number is range (e.g. 1-10), in which case break it down and add separate entries for each item in range
 		if (numberRange.indexOf('-') != -1) {
@@ -214,13 +228,14 @@ router.post('/admin/lottery/:id/sell', function(req, res) {
 				var newTicket = {
 					description: description,
 					desc_without_number: descWithoutNumber,
+					color_hex: colorHex,
 					color: color,
 					letter: letter,
 					number: i,
 					created_at: Date.now()
 				};
 				
-				soldTickets.push(newTicket.description);
+				soldTickets.push({ description: newTicket.description, color_hex: newTicket.color_hex });
 				lottery.tickets_sold.push(newTicket);
 				lottery.tickets_for_draw.push(newTicket);
 			}
@@ -230,16 +245,18 @@ router.post('/admin/lottery/:id/sell', function(req, res) {
 			var newTicket = {
 				description: descWithoutNumber + ' ' + numberRange,
 				desc_without_number: descWithoutNumber,
+				color_hex: colorHex,
 				color: color,
 				letter: letter,
 				number: numberRange,
 				created_at: Date.now()
 			};
 			
-			soldTickets.push(newTicket.description);
+			soldTickets.push({ description: newTicket.description, color_hex: newTicket.color_hex });
 			lottery.tickets_sold.push(newTicket);
 			lottery.tickets_for_draw.push(newTicket);
 		}
+
 
 		lottery.save(function() {
 			var response = { success: true, tickets: soldTickets };	

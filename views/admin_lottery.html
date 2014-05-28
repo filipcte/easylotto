@@ -19,10 +19,9 @@
               <div class="small-4 columns">
                 <label>Color</label>
                 <select name="color">
-                  <option value="blå">Blå</option>
-                  <option value="gul">Gul</option>
-                  <option value="grønn">Grønn</option>
-                  <option value="rosa">Rosa</option>
+                  {% for color in lottery.ticket_colors %}
+                  <option value="{{ color.name }}">{{ color.name|capitalize }}</option>
+                  {% endfor %}
                 </select>
               </div>
 
@@ -48,7 +47,7 @@
           <h3>Sold tickets</h3>
           <ul id="sold-tickets-list">
           {% for ticket in lottery.tickets_sold %}
-            <li>{{ ticket.description }} <a href="/admin/lottery/{{ lottery.id }}/remove-ticket/{{ ticket.id }}" class="delete"><i class="fa fa-trash-o"></i></a></li>
+            <li><a style="background-color: {{ ticket.color_hex }};" href="/admin/lottery/{{ lottery.id }}/remove-ticket/{{ ticket.id }}">{{ ticket.description }}</a></li>
           {% endfor %}
           </ul>
         </div>

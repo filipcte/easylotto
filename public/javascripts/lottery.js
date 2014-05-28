@@ -69,7 +69,7 @@ var Lottery = {
 	showSoldTickets: function(tickets) {
 		var ticketsHtml = '';
 		$.each(tickets, function(i, ticket) {
-			ticketsHtml += '<li>' + ticket + '</li>';
+			ticketsHtml += '<li style="background-color: ' + ticket.color_hex + ';">' + ticket.description + '</li>';
 		});
 		$('ul#sold-tickets-list').prepend($(ticketsHtml));
 	},

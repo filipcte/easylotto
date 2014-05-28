@@ -42,8 +42,29 @@
 }
 
 a.delete {
-  color: red;
+  color: #000;
 }
 
+#sold-tickets-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 
+  li {
+    float: left;
+    margin: 0 15px 15px 0;
+
+    a {
+      color: #fff;
+      background: #eee;
+      padding: 10px 15px;
+      display: block;
+
+      &:hover {
+        background: red !important;
+      }
+    }
+  }
+  
+}
 

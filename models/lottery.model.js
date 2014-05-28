@@ -9,10 +9,16 @@ var lotterySchema = new Schema({
       type: String,
       default: 'open'
     },
+
+    ticket_colors: [{
+      name: String,
+      hex: String
+    }],
     
     tickets_sold: [{
       description: String,
       desc_without_number: String,
+      color_hex: String,
       color: String,
       letter: String,
       number: String,
