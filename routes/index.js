@@ -37,7 +37,6 @@ router.post('/login', function(req, res) {
 	});
 });
 
-
 // home
 router.get('/', function(req, res) {
 	res.render('index', { title: 'Lotto' });
@@ -247,6 +246,30 @@ router.post('/admin/lottery/:id/sell', function(req, res) {
 			res.json(response);
 		});
 	}); 
+});
+
+// remove sold lottery ticket
+router.get('/admin/lottery/:id/remove-ticket/:ticket_id', function(req, res) {
+	//if (!req.session.user) { res.redirect('/'); }
+
+	var lotteryId = req.params.id;
+	var ticketId = req.params.ticket_id;
+
+	Lottery.findById(lotteryId, function(err, lottery) {
+		if (typeof lottery == 'undefined') {
+			// error handling
+		}
+
+		lottery.tickets_sold.id(ticketId).remove();
+
+		if (lottery.tickets_for_draw.id(ticketId) !== null) {
+			lottery.tickets_for_draw.id(ticketId).remove();		
+		}
+
+		lottery.save(function() {
+			res.redirect('/admin/lottery/' + lotteryId);	
+		});
+	});
 });
 
 module.exports = router;

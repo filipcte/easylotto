@@ -48,7 +48,7 @@
           <h3>Sold tickets</h3>
           <ul id="sold-tickets-list">
           {% for ticket in lottery.tickets_sold %}
-            <li>{{ ticket.description }}</li>
+            <li>{{ ticket.description }} <a href="/admin/lottery/{{ lottery.id }}/remove-ticket/{{ ticket.id }}" class="delete"><i class="fa fa-trash-o"></i></a></li>
           {% endfor %}
           </ul>
         </div>
