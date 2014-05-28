@@ -2,9 +2,6 @@
 
 
 // Main header
-.top-bar {
-	margin-bottom: 30px;
-}
 
 #draw-wrapper {
   display: none;
@@ -45,6 +42,12 @@ a.delete {
   color: #000;
 }
 
+.add-tickets {
+  input {
+    margin-bottom: 5px;
+  }
+}
+
 .colorful-tickets {
   li {
     margin-bottom: 5px;
@@ -55,7 +58,7 @@ a.delete {
       padding: 10px 15px;
       display: block;
       @include single-transition(all, .2s, ease);
-      span {
+      i {
         float: right;
         opacity: 0;
         margin-top: 5px;
@@ -63,7 +66,7 @@ a.delete {
       }
       &:hover {
         background: red !important;
-        span {
+        i {
           opacity: 1;
         }
       }
