@@ -14,7 +14,7 @@
       </dl>
       <div class="tabs-content">
         <div class="content active" id="panel-tickets">
-          <form id="add-sold-ticket" method="post" action="/admin/lottery/{{ lottery.id }}/sell">
+          <form class="add-tickets" id="add-sold-ticket" method="post" action="/admin/lottery/{{ lottery.id }}/sell">
             <div class="row">
               <div class="small-4 columns">
                 <label>Color</label>
@@ -47,19 +47,19 @@
           </form>
 
           <h3>Sold tickets</h3>
-          <ul id="sold-tickets-list" class="small-block-grid-3 colorful-tickets">
-            {% for ticket in lottery.tickets_sold %}
-              <li><a style="background-color: {{ ticket.color_hex }};" href="/admin/lottery/{{ lottery.id }}/remove-ticket/{{ ticket.id }}">{{ ticket.description }}<span class="fa fa-times"></span></a></li>
-            {% endfor %}
+          <ul id="sold-tickets-list" class="small-block-grid-5 colorful-tickets">
+          {% for ticket in lottery.tickets_sold %}
+            <li><a style="background-color: {{ ticket.color_hex }};" href="/admin/lottery/{{ lottery.id }}/remove-ticket/{{ ticket.id }}">{{ ticket.description }}<i class="fa fa-times"></i></a></li>
+          {% endfor %}
           </ul>
         </div>
 
         <div class="content" id="panel-drawings">
           <button class="button large expand" id="trigger-draw" data-url="/admin/lottery/{{ lottery.id }}/draw">DRAW</button>
           <h3>Winners</h3>
-          <ul id="draw-results" class="small-block-grid-3 colorful-tickets">
+          <ul id="draw-results" class="small-block-grid-5 colorful-tickets">
           {% for drawing in lottery.drawings %}
-            <li><a style="background-color: {{ drawing.color_hex }};" href="javascript:;">{{ drawing.winning_ticket }}<span class="fa fa-times"></span></a></li>
+            <li><a style="background-color: {{ drawing.color_hex }};" href="javascript:;">{{ drawing.winning_ticket }}<i class="fa fa-times"></i></a></li>
           {% endfor %}
           </ul>
         </div>
