@@ -1,4 +1,6 @@
 var Lottery = {
+	// flag
+	drawInProgress: false,
 
 	// Init stuff
 	init: function() {
@@ -6,14 +8,14 @@ var Lottery = {
 		if ($('#trigger-draw').length) {
 
 			$(document).bind('keydown', 'esc', Lottery.endDraw);
-			$(document).bind('keydown', 'return', Lottery.triggerDraw);
+			$(document).bind('keydown', 'return', Lottery.triggerDraw);	
 
 			// overlay click handling
 			$('#draw-result-wrap').click(Lottery.triggerDraw);
 
 			// click on the DRAW button
 			$('#trigger-draw').click(function() {
-				Lottery.triggerDraw();
+				Lottery.triggerDraw(true);
 				return false;
 			});
 		}
@@ -29,28 +31,38 @@ var Lottery = {
 		}
 	},
 
+	// End drawing (close overlay)
 	endDraw: function() {
+		Lottery.drawInProgress = false;
 		$('#draw-result-wrap').fadeOut();
 	},
 
-	triggerDraw: function() {
-		$('#draw-result-wrap #draw-result div').html('');
-		$('#draw-result-wrap #draw-result img').show();
+	// Perform a draw
+	triggerDraw: function(triggerAnyway) {
+		if (($('#draw-result-wrap').is(':visible') && Lottery.drawInProgress === false) || triggerAnyway === true) {
+			Lottery.drawInProgress = true;
 
-		// show big overlay
-		$('#draw-result-wrap').show();
+			$('#draw-result-wrap #draw-result div').html('');
+			$('#draw-result-wrap #draw-result img').show();
 
-		var url = $('#trigger-draw').data('url');
-		
-		// Ajax request to perform the draw and get the winning ticket
-		$.getJSON(url, function(response) {
-			if (response.success === false) {
-				Lottery.endDraw();
-			}
-			else {
-				Lottery.showDrawResult(response.winningTicket);	
-			}
-		});
+			// show big overlay
+			$('#draw-result-wrap').show();
+
+			var url = $('#trigger-draw').data('url');
+			
+			// Ajax request to perform the draw and get the winning ticket
+			$.getJSON(url, function(response) {
+				if (response.success === false) {
+					Lottery.endDraw();
+				}
+				else {
+					Lottery.showDrawResult(response.winningTicket);	
+				}
+			});
+		}
+		else {
+			return ;
+		}
 	},
 
 	// After a ticket has been sold, inject it into DOM
@@ -79,8 +91,11 @@ var Lottery = {
 
 				setTimeout(function() {
 					$('#draw-result-wrap #draw-result div span#result-part-' + i).fadeIn('slow');	
+
+					if (i == ticket_parts.length - 1) {
+						Lottery.drawInProgress = false;
+					}
 				}, 1500 * (i + 1));
-				
 			});
 		}, 3000);
 
