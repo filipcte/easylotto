@@ -20,15 +20,26 @@
   height: 100%;
   background: #eee;
   text-align: center;
+  
+  #draw-result {
+    margin-top: 170px;
+    font-size: 120px;
+    font-weight: bold;
+
+    .draw-result-part {
+      display: none;
+      padding-right: 20px;
+    }
+  }
+
+  #tekno-logo {
+    position: fixed;
+    bottom: 30px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+  }  
 }
 
-#draw-result {
-  margin-top: 170px;
-  font-size: 120px;
-  font-weight: bold;
-}
 
-.draw-result-part {
-  display: none;
-  padding-right: 20px;
-}
+
