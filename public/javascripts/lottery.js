@@ -33,8 +33,9 @@ var Lottery = {
 
 	// End drawing (close overlay)
 	endDraw: function() {
-		Lottery.drawInProgress = false;
-		$('#draw-result-wrap').fadeOut();
+		if (Lottery.drawInProgress === false) {
+			$('#draw-result-wrap').fadeOut();	
+		}		
 	},
 
 	// Perform a draw
