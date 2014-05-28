@@ -153,10 +153,9 @@ router.get('/admin/lottery/:id/draw', function(req, res) {
 	//if (!req.session.user) { res.redirect('/'); }
 
 	var lotteryId = req.params.id;
-console.log(lotteryId)
+
 	Lottery.findById(lotteryId, function(err, lottery) {
 		if (typeof lottery == 'undefined') {
-			console.log(lottery)
 			// AJAX error handling
 		}
 

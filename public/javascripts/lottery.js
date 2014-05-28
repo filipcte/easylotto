@@ -48,7 +48,7 @@ var Lottery = {
 			// show big overlay
 			$('#draw-result-wrap').show();
 
-			var url = $('#trigger-draw').data('url');
+			var url = $('#trigger-draw').data('url') + '?' + Date.now();
 			
 			// Ajax request to perform the draw and get the winning ticket
 			$.getJSON(url, function(response) {
