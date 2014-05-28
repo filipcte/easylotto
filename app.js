@@ -1,6 +1,8 @@
 require('./models/user.model.js');
 require('./models/lottery.model.js');
 
+var config = require('./config/config');
+
 var express = require('express');
 var session = require('express-session');
 var path = require('path');
