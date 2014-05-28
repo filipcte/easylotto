@@ -23,12 +23,12 @@
   
   #draw-result {
     margin-top: 170px;
-    font-size: 120px;
+    font-size: 200px;
     font-weight: bold;
 
     .draw-result-part {
       display: none;
-      padding-right: 20px;
+      padding-right: 40px;
     }
   }
 
@@ -45,14 +45,14 @@ a.delete {
   color: #000;
 }
 
-#sold-tickets-list {
+.colorful-tickets {
   list-style-type: none;
   margin: 0;
   padding: 0;
 
   li {
     float: left;
-    margin: 0 15px 15px 0;
+    margin: 0 10px 10px 0;
 
     a {
       color: #fff;

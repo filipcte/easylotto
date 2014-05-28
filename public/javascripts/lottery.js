@@ -56,7 +56,7 @@ var Lottery = {
 					Lottery.endDraw();
 				}
 				else {
-					Lottery.showDrawResult(response.winningTicket);	
+					Lottery.showDrawResult(response.winningTicket, response.colorHex);	
 				}
 			});
 		}
@@ -75,7 +75,7 @@ var Lottery = {
 	},
 
 	// Once a draw ends, show the result (winning ticket) on the page
-	showDrawResult: function(winningTicket) {
+	showDrawResult: function(winningTicket, colorHex) {
 		setTimeout(function() {
 			$('#draw-result-wrap #draw-result img').hide();
 
@@ -99,7 +99,7 @@ var Lottery = {
 			});
 		}, 3000);
 
-		var winningTicketHtml = $('<li>' + winningTicket + '</li>');
+		var winningTicketHtml = $('<li><a style="background-color: ' + colorHex + ';" href="javascript:;">' + winningTicket + '</a></li>');
 		$('#draw-results').prepend(winningTicketHtml);
 	},
 

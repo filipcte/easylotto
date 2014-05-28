@@ -31,6 +31,7 @@ var lotterySchema = new Schema({
 
     drawings: [{
       winning_ticket: String,
+      color_hex: String,
       created_at: Date    
     }],
 

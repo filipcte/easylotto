@@ -174,16 +174,27 @@ router.get('/admin/lottery/:id/draw', function(req, res) {
 			if (lottery.tickets_for_draw.length > 0) {
 				lottery.tickets_for_draw.id(winningTicket.id).remove();	
 			}
+			var color = winningTicket.description.split(' ');
+			color = color[0];
+			var colorHex = '#eeeeee';
+
+			// determine hex color for chosen color
+			for (var i in lottery.ticket_colors) {
+				if (lottery.ticket_colors[i].name == color) {
+					colorHex = lottery.ticket_colors[i].hex;
+				}
+			}
 
 			// Save this drawing
 			var newDrawing = {
 				winning_ticket: winningTicket.description,
+				color_hex: colorHex,
 				created_at: Date.now()
 			};
 			lottery.drawings.push(newDrawing);
 
 			lottery.save(function() {
-				var response = { success: true, winningTicket: winningTicket.description };	
+				var response = { success: true, winningTicket: winningTicket.description, colorHex: winningTicket.color_hex };	
 				res.json(response);
 			});	
 		}
@@ -256,7 +267,6 @@ router.post('/admin/lottery/:id/sell', function(req, res) {
 			lottery.tickets_sold.push(newTicket);
 			lottery.tickets_for_draw.push(newTicket);
 		}
-
 
 		lottery.save(function() {
 			var response = { success: true, tickets: soldTickets };	
