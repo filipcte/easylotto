@@ -1,4 +1,5 @@
 // NODE_ENV=staging|production|development node server.js
+// NODE_ENV=staging forever server.js 
 
 var debug = require('debug')('lotto');
 var config = require('./config/config');

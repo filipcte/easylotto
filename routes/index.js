@@ -158,13 +158,13 @@ router.get('/admin/lottery/:id/draw', function(req, res) {
 		if (typeof lottery == 'undefined') {
 			// AJAX error handling
 		}
-
+console.log(lottery.tickets_for_draw)
 		// determine winning ticket
 		var min = 0;
 		var max = lottery.tickets_for_draw.length - 1;
 		var random = Math.floor(Math.random() * (max - min + 1) + min);
 		var winningTicket = lottery.tickets_for_draw[random];
-
+console.log(winningTicket)
 		if (typeof winningTicket == 'undefined') {
 			var response = { success: false };	
 			res.json(response);
