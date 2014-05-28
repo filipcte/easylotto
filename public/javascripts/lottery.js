@@ -44,7 +44,12 @@ var Lottery = {
 		
 		// Ajax request to perform the draw and get the winning ticket
 		$.getJSON(url, function(response) {
-			Lottery.showDrawResult(response.winningTicket);
+			if (response.success === false) {
+				Lottery.endDraw();
+			}
+			else {
+				Lottery.showDrawResult(response.winningTicket);	
+			}
 		});
 	},
 

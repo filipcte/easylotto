@@ -160,22 +160,28 @@ router.get('/admin/lottery/:id/draw', function(req, res) {
 		var random = Math.floor(Math.random() * (max - min + 1) + min);
 		var winningTicket = lottery.tickets_for_draw[random];
 
-		// remove from available tickets
-		if (lottery.tickets_for_draw.length > 0) {
-			lottery.tickets_for_draw.id(winningTicket.id).remove();	
-		}
-
-		// Save this drawing
-		var newDrawing = {
-			winning_ticket: winningTicket.description,
-			created_at: Date.now()
-		};
-		lottery.drawings.push(newDrawing);
-
-		lottery.save(function() {
-			var response = { success: true, winningTicket: winningTicket.description };	
+		if (typeof winningTicket == 'undefined') {
+			var response = { success: false };	
 			res.json(response);
-		});
+		}
+		else {
+			// remove from available tickets
+			if (lottery.tickets_for_draw.length > 0) {
+				lottery.tickets_for_draw.id(winningTicket.id).remove();	
+			}
+
+			// Save this drawing
+			var newDrawing = {
+				winning_ticket: winningTicket.description,
+				created_at: Date.now()
+			};
+			lottery.drawings.push(newDrawing);
+
+			lottery.save(function() {
+				var response = { success: true, winningTicket: winningTicket.description };	
+				res.json(response);
+			});	
+		}
 	}); 
 });
 
