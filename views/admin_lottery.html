@@ -5,7 +5,7 @@
   <div class="row">
     <div class="small-12 columns">
       <h1>{{ lottery.name }}</h1>
-      <div>{{ lottery.created_at.toDateString() }}</div>
+      <span class="secondary label">{{ lottery.created_at.toDateString() }}</span>
       <hr>
 
       <dl class="tabs" data-tab>
@@ -61,13 +61,12 @@
           {% endfor %}
           </ul>
         </div>
-        
       </div>
 
       <hr>
+
       <ul class="actions no-bullet">
-        <li><a href="/admin/lottery/{{ lottery.id }}/status/?s=closed">Close lottery</a></li>  
-        <li><a href="/admin/lottery/{{ lottery.id }}/remove">Delete lottery</a></li>
+        <li><a href="/admin/lottery/{{ lottery.id }}/remove"><i class="fa fa-trash-o"></i> Delete lottery</a></li>
       </ul>
     </div>
   </div>
@@ -77,7 +76,9 @@
     <div id="tekno-logo"><img src="/images/teknograd-logo.png" /></div>
   </div>
   
-  <!-- <a href="/admin/lottery/{{ lottery.id }}/status/?s=draw">End ticket sales</a><br />
-  <a href="/admin/lottery/{{ lottery.id }}/status/?s=open">Re-open lottery</a><br /> -->
+  <!-- 
+  <a href="/admin/lottery/{{ lottery.id }}/status/?s=closed">Close lottery</a>
+  <a href="/admin/lottery/{{ lottery.id }}/status/?s=draw">End ticket sales</a>
+  <a href="/admin/lottery/{{ lottery.id }}/status/?s=open">Re-open lottery</a> -->
 
 {% endblock %}
