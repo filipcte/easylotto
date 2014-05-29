@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var _ = require('lodash');
 var mongoose = require('mongoose');
 var Lottery = mongoose.model('Lottery');
 var User = mongoose.model('User');
@@ -81,15 +82,8 @@ router.get('/admin/lottery/:id', function(req, res) {
 		if (typeof lottery == 'undefined') {
 			res.redirect('/admin');
 		}
-
-		// Lottery.aggregate(
-	 //    { $group: { _id: '$tickets_sold.desc_without_number',  }},
-		//   { $project: { _id: 1 }},
-		//   function (err, res) {
-		//   	console.log(err)
-		//   	console.log(res);
-		// });
-
+		
+		console.log(lottery)
 
 		res.render('admin_lottery', { lottery: lottery })
 	}); 
@@ -131,21 +125,6 @@ router.get('/admin/lottery/:id/status/', function(req, res) {
 	else {
 		res.send('oops');
 	}
-});
-
-// lottery drawings
-router.get('/admin/lottery/:id/drawings', function(req, res) {
-	//if (!req.session.user) { res.redirect('/'); }
-
-	var lotteryId = req.params.id;
-
-	Lottery.findById(lotteryId, function(err, lottery) {
-		if (typeof lottery == 'undefined') {
-			res.redirect('/admin');
-		}
-
-		res.render('admin_lottery_draw', { lottery: lottery })
-	}); 
 });
 
 // lottery draw action
@@ -226,49 +205,43 @@ router.post('/admin/lottery/:id/sell', function(req, res) {
 			}
 		}
 
-		// check if number is range (e.g. 1-10), in which case break it down and add separate entries for each item in range
-		if (numberRange.indexOf('-') != -1) {
-			var number = numberRange.split('-');
-			var numberMin = number[0];
-			var numberMax = number[1];
+		// prepare new ticket
+		var newTicket = {
+			description: descWithoutNumber + ' ' + numberRange,
+			desc_without_number: descWithoutNumber,
+			color_hex: colorHex,
+			color: color,
+			letter: letter,
+			number: numberRange,
+			created_at: Date.now()
+		};
+		
+		lottery.tickets_sold.push(newTicket);
+		soldTickets.push({ description: newTicket.description, color_hex: newTicket.color_hex });
 
-			for (var i = numberMin; i <= numberMax; i++) {
-				var description = descWithoutNumber + ' ' + i;
+		// save new ticket
+		lottery.save(function(err, lottery) {
+			var lastSoldTicketId = lottery.tickets_sold[lottery.tickets_sold.length - 1].id;
 
-				// Add this ticket
-				var newTicket = {
-					description: description,
-					desc_without_number: descWithoutNumber,
-					color_hex: colorHex,
-					color: color,
-					letter: letter,
-					number: i,
-					created_at: Date.now()
-				};
-				
-				soldTickets.push({ description: newTicket.description, color_hex: newTicket.color_hex });
-				lottery.tickets_sold.push(newTicket);
-				lottery.tickets_for_draw.push(newTicket);
+			// check if number is range (e.g. 1-10), in which case break it down and add separate entries for each item in range
+			if (numberRange.indexOf('-') != -1) {
+				var number = numberRange.split('-');
+				var numberMin = number[0];
+				var numberMax = number[1];
+
+				// loop through numbers in the range and add individual tickets in the drawing pool
+				for (var i = numberMin; i <= numberMax; i++) {
+					var description = descWithoutNumber + ' ' + i;
+					lottery.tickets_for_draw.push({ description: description, sold_ticket_id: lastSoldTicketId  });
+				}
 			}
-		}
-		// Add single ticket sold
-		else {
-			var newTicket = {
-				description: descWithoutNumber + ' ' + numberRange,
-				desc_without_number: descWithoutNumber,
-				color_hex: colorHex,
-				color: color,
-				letter: letter,
-				number: numberRange,
-				created_at: Date.now()
-			};
-			
-			soldTickets.push({ description: newTicket.description, color_hex: newTicket.color_hex });
-			lottery.tickets_sold.push(newTicket);
-			lottery.tickets_for_draw.push(newTicket);
-		}
+			else {
+				// add ticket in the drawing pool
+				lottery.tickets_for_draw.push({ description: descWithoutNumber + ' ' + numberRange, sold_ticket_id: lastSoldTicketId });
+			}
 
-		lottery.save(function() {
+			lottery.save();
+
 			var response = { success: true, tickets: soldTickets };	
 			res.json(response);
 		});
@@ -287,11 +260,13 @@ router.get('/admin/lottery/:id/remove-ticket/:ticket_id', function(req, res) {
 			// error handling
 		}
 
+		// delete sold ticket
 		lottery.tickets_sold.id(ticketId).remove();
 
-		if (lottery.tickets_for_draw.id(ticketId) !== null) {
-			lottery.tickets_for_draw.id(ticketId).remove();		
-		}
+		// also remove all corresponding tickets from the drawing pool
+		lottery.tickets_for_draw = _.remove(lottery.tickets_for_draw, function(ticket) {
+			return (ticket.sold_ticket_id != ticketId ? true : false);
+		});
 
 		lottery.save(function() {
 			res.redirect('/admin/lottery/' + lotteryId);	

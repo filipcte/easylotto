@@ -18,15 +18,16 @@ var lotterySchema = new Schema({
     tickets_sold: [{
       description: String,
       desc_without_number: String,
-      color_hex: String,
       color: String,
       letter: String,
       number: String,
+      color_hex: String,
       created_at: Date
     }],
 
     tickets_for_draw: [{
       description: String,
+      sold_ticket_id: String
     }],
 
     drawings: [{
