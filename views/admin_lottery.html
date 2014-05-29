@@ -1,17 +1,26 @@
 {% extends 'layout.html' %}
 
+{% block lottery_name %}
+<section class="top-bar-section">
+  <ul class="right">
+    <li class="divider"></li>
+    <li><a href="/admin/lottery/{{ lottery.id }}">{{ lottery.name }}</a></li>
+  </ul>
+</section>
+{% endblock %}
+
+
 {% block content %}
   
   <div class="row">
     <div class="small-12 columns">
-      <h1>{{ lottery.name }}</h1>
-      <span class="secondary label">{{ lottery.created_at.toDateString() }}</span>
-      <hr>
-
       <dl class="tabs" data-tab>
         <dd class="active"><a href="#panel-tickets">Tickets</a></dd>
         <dd><a href="#panel-drawings">Drawings</a></dd>
       </dl>
+
+      <hr>
+
       <div class="tabs-content">
         <div class="content active" id="panel-tickets">
           <form class="add-tickets" id="add-sold-ticket" method="post" action="/admin/lottery/{{ lottery.id }}/sell">
@@ -75,7 +84,6 @@
   
   <div id="draw-result-wrap">
     <div id="draw-result"><img src="/images/loader.gif" /><div></div></div>
-    <div id="tekno-logo"><img src="/images/teknograd-logo.png" /></div>
   </div>
   
   <!-- 

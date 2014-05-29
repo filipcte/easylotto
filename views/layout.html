@@ -14,9 +14,12 @@
   <nav class="top-bar" data-topbar>
     <ul class="title-area">
       <li class="name">
-        <h1><a href="/admin">EasyLotto</a></h1>
+        &nbsp;<a href="/admin"><img src="/images/teknograd-logo-small.png" alt="Teknograd" /></a>
       </li>
     </ul>
+
+    {% block lottery_name %}{% endblock %}
+
     {#{% if !userAuth %}
     <section class="top-bar-section">
       <ul class="right">
