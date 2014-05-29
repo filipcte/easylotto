@@ -134,7 +134,7 @@ router.get('/admin/lottery/:id', function(req, res) {
 		if (typeof lottery == 'undefined') {
 			res.redirect('/admin');
 		}
-		console.log(lottery.tickets_for_draw.length)
+		
 		res.render('admin_lottery', { lottery: lottery })
 	}); 
 });
