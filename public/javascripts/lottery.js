@@ -2,13 +2,16 @@ var Lottery = {
 	// flag
 	drawInProgress: false,
 
+	// default bg color for draw overlay
+	defaultDrawBgColor: '#eeeeee',
+
 	// Init stuff
 	init: function() {
 		// draw		
 		if ($('#trigger-draw').length) {
 
 			$(document).bind('keydown', 'esc', Lottery.endDraw);
-			$(document).bind('keydown', 'return', Lottery.triggerDraw);	
+			//$(document).bind('keydown', 'return', Lottery.triggerDraw);	
 
 			// overlay click handling
 			$('#draw-result-wrap').click(Lottery.triggerDraw);
@@ -33,8 +36,9 @@ var Lottery = {
 
 	// End drawing (close overlay)
 	endDraw: function() {
-		Lottery.drawInProgress = false;
-		$('#draw-result-wrap').fadeOut();
+		if (Lottery.drawInProgress === false) {
+			$('#draw-result-wrap').fadeOut();	
+		}		
 	},
 
 	// Perform a draw
@@ -42,17 +46,20 @@ var Lottery = {
 		if (($('#draw-result-wrap').is(':visible') && Lottery.drawInProgress === false) || triggerAnyway === true) {
 			Lottery.drawInProgress = true;
 
+			Lottery.changeBgColor();
 			$('#draw-result-wrap #draw-result div').html('');
 			$('#draw-result-wrap #draw-result img').show();
 
 			// show big overlay
 			$('#draw-result-wrap').show();
+			$('#draw-result').css('margin-top', (($('#draw-result-wrap').height() - $('#draw-result').outerHeight()) / 2 - 80) + 'px');
 
-			var url = $('#trigger-draw').data('url');
+			var url = $('#trigger-draw').data('url') + '?' + Date.now();
 			
 			// Ajax request to perform the draw and get the winning ticket
 			$.getJSON(url, function(response) {
 				if (response.success === false) {
+					Lottery.drawInProgress = false;
 					Lottery.endDraw();
 				}
 				else {
@@ -82,15 +89,16 @@ var Lottery = {
 			var ticket_parts = winningTicket.split(' ');
 
 			$.each(ticket_parts, function(i, part) {
-				// change overlay bg color according to winning ticket's color
-				if (i == 0) {
-					Lottery.changeBgColor(part);
-				}
 
 				$('<span class="draw-result-part" id="result-part-' + i + '">' + Lottery.capitaliseFirstLetter(part) + '</span>').appendTo($('#draw-result-wrap #draw-result div'));
 
 				setTimeout(function() {
 					$('#draw-result-wrap #draw-result div span#result-part-' + i).fadeIn('slow');	
+
+					// change overlay bg color according to winning ticket's color
+					if (i == 0) {
+						Lottery.changeBgColor(part);
+					}
 
 					if (i == ticket_parts.length - 1) {
 						Lottery.drawInProgress = false;
@@ -104,7 +112,7 @@ var Lottery = {
 	},
 
 	changeBgColor: function(color) {
-		var newColor = '#FFFF00';
+		var newColor = this.defaultDrawBgColor;
 
 		if (color == 'blå') {
 			newColor = '#1E90FF';
@@ -122,7 +130,14 @@ var Lottery = {
 			newColor = '#FFB6C1';
 		}
 
-		$('#draw-result-wrap').css('background-color', newColor);
+		$('#draw-result-wrap')
+			.hide()
+			.css('background-color', newColor)
+			.fadeIn('fast')		
+			.each(function() {
+		    var redraw = this.offsetHeight;
+		  })
+			
 	},
 
 	capitaliseFirstLetter: function(string) {

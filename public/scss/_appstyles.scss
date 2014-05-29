@@ -3,7 +3,7 @@
 
 // Main header
 .top-bar {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 #draw-wrapper {
@@ -14,15 +14,14 @@
   display: none;
   z-index: 999;
   position: absolute;
-  top: 0;
+  top: 45px;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 95%;
   background: #eee;
   text-align: center;
   
   #draw-result {
-    margin-top: 170px;
     font-size: 200px;
     font-weight: bold;
 
@@ -31,14 +30,6 @@
       padding-right: 40px;
     }
   }
-
-  #tekno-logo {
-    position: fixed;
-    bottom: 30px;
-    left: 0;
-    width: 100%;
-    text-align: center;
-  }  
 }
 
 .tabs {

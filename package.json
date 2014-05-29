@@ -16,7 +16,8 @@
     "swig": "*",
     "mongodb": "*",
     "mongoose": "*",
-    "bcrypt-nodejs" : "*"
+    "bcrypt-nodejs" : "*",
+    "lodash" : "*"
   },
   "devDependencies": {
     "node-sass": "~0.8.6",
