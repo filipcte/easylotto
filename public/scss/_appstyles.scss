@@ -2,6 +2,9 @@
 
 
 // Main header
+.top-bar {
+  margin-bottom: 15px;
+}
 
 #draw-wrapper {
   display: none;
@@ -38,16 +41,18 @@
   }  
 }
 
+.tabs {
+  border-bottom: solid 1px #86CDFC;
+  dd {
+    margin-right: 5px;
+  }
+}
+
 a.delete {
   color: red;
   font-size: 12px;
 }
 
-.add-tickets {
-  input {
-    margin-bottom: 5px;
-  }
-}
 
 .colorful-tickets {
   li {

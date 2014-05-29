@@ -5,8 +5,7 @@
   <div class="row">
     <div class="small-12 columns">
       <h1>{{ lottery.name }}</h1>
-      <span class="secondary label">{{ lottery.created_at.toDateString() }}</span>
-      <hr>
+      <!-- <span class="secondary label">{{ lottery.created_at.toDateString() }}</span> -->
 
       <dl class="tabs" data-tab>
         <dd class="active"><a href="#panel-tickets">Tickets</a></dd>
@@ -27,14 +26,14 @@
 
               <div class="small-2 columns">
                 <label>Letter
-                  <input type="text" name="letter" placeholder="Letter" />
+                  <input type="text" name="letter" placeholder="A - Z">
                 </label>
               </div>
 
               <div class="small-2 columns">
                 <label>Number or range
-                  <input type="text" name="number" placeholder="Number(s)" />
-                  <small>e.g. 1, 1-100</small>
+                  <input type="text" name="number" placeholder="1, 1-100">
+                  <!-- <small>e.g. 1, 1-100</small> -->
                 </label>
               </div>
 
