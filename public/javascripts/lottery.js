@@ -78,7 +78,7 @@ var Lottery = {
 		$.each(tickets, function(i, ticket) {
 			ticketsHtml += '<li><a style="background-color: ' + ticket.color_hex + ';" href="javascript:;">' + Lottery.capitaliseFirstLetter(ticket.description) + '<i class="fa fa-times"></i></a></li>';
 		});
-		$('ul#sold-tickets-list').prepend($(ticketsHtml));
+		$('ul#sold-tickets-list').append($(ticketsHtml));
 	},
 
 	// Once a draw ends, show the result (winning ticket) on the page
@@ -114,19 +114,19 @@ var Lottery = {
 	changeBgColor: function(color) {
 		var newColor = this.defaultDrawBgColor;
 
-		if (color == 'blå') {
+		if (color == 'Blå') {
 			newColor = '#1E90FF';
 		}
-		else if (color == 'gul') {
+		else if (color == 'Gul') {
 			newColor = '#FFFF00';
 		}
-		else if (color == 'grønn') {
+		else if (color == 'Grønn') {
 			newColor = '#32CD32';
 		}
-		else if (color == 'white') {
+		else if (color == 'White') {
 			newColor = '#fff';
 		}
-		else if (color == 'rosa') {
+		else if (color == 'Rosa') {
 			newColor = '#FFB6C1';
 		}
 

@@ -18,52 +18,52 @@ router.get('/seed999', function(req, res) {
 });
 	
 // Create tickets automatically
-router.get('/admin/lottery/:id/seed888', function(req, res) {
-	var lotteryId = req.params.id;
+// router.get('/admin/lottery/:id/seed888', function(req, res) {
+// 	var lotteryId = req.params.id;
 
-	Lottery.findById(lotteryId, function(err, lottery) {
-		lottery.tickets_sold = [];
-		lottery.tickets_for_draw = [];
-		lottery.save();
+// 	Lottery.findById(lotteryId, function(err, lottery) {
+// 		lottery.tickets_sold = [];
+// 		lottery.tickets_for_draw = [];
+// 		lottery.save();
 		
-		//var abc_str = "abcdefghijklmnopqrstuvwxyzæøå";
-		var abc_str = "abc";
-	 	var abc = abc_str.toUpperCase().split("");
+// 		//var abc_str = "abcdefghijklmnopqrstuvwxyzæøå";
+// 		var abc_str = "abc";
+// 	 	var abc = abc_str.toUpperCase().split("");
 	 	
-		_(lottery.ticket_colors).forEach(function(col) {
-			_(abc).forEach(function(letter) {
-				for (i = 1; i <= 50; i++) {
-					//console.log(col.name+' '+letter+' '+i)
-					var color = col.name;
-					var colorHex = col.hex;
-					var numberRange = i;
-					var descWithoutNumber = strCapitalize(color) + ' ' + letter;
-					var soldTickets = [];
+// 		_(lottery.ticket_colors).forEach(function(col) {
+// 			_(abc).forEach(function(letter) {
+// 				for (i = 1; i <= 50; i++) {
+// 					//console.log(col.name+' '+letter+' '+i)
+// 					var color = col.name;
+// 					var colorHex = col.hex;
+// 					var numberRange = i;
+// 					var descWithoutNumber = strCapitalize(color) + ' ' + letter;
+// 					var soldTickets = [];
 					
-					// prepare new ticket
-					var newTicket = {
-						description: descWithoutNumber + ' ' + numberRange,
-						desc_without_number: descWithoutNumber,
-						color_hex: colorHex,
-						color: color,
-						letter: letter,
-						number: numberRange,
-						created_at: Date.now()
-					};
+// 					// prepare new ticket
+// 					var newTicket = {
+// 						description: descWithoutNumber + ' ' + numberRange,
+// 						desc_without_number: descWithoutNumber,
+// 						color_hex: colorHex,
+// 						color: color,
+// 						letter: letter,
+// 						number: numberRange,
+// 						created_at: Date.now()
+// 					};
 					
-					lottery.tickets_sold.push(newTicket);
+// 					lottery.tickets_sold.push(newTicket);
 
-					var lastSoldTicketId = lottery.tickets_sold[lottery.tickets_sold.length - 1].id;
-					// add ticket in the drawing pool
-					lottery.tickets_for_draw.push({ description: descWithoutNumber + ' ' + numberRange, sold_ticket_id: lastSoldTicketId });
+// 					var lastSoldTicketId = lottery.tickets_sold[lottery.tickets_sold.length - 1].id;
+// 					// add ticket in the drawing pool
+// 					lottery.tickets_for_draw.push({ description: descWithoutNumber + ' ' + numberRange, sold_ticket_id: lastSoldTicketId });
 
-					lottery.save();
-				}
-			});		
-		});
-		res.send('done');
-	});
-});
+// 					lottery.save();
+// 				}
+// 			});		
+// 		});
+// 		res.send('done');
+// 	});
+// });
 
 ///////////////////////////////
 
@@ -110,10 +110,10 @@ router.post('/admin/lottery/create', function(req, res) {
 
 	var lotteryName = req.body.lottery_name;
 	var defaultColors = [
-		{ name: 'blå', hex: '#1E90FF' },
-		{ name: 'gul', hex: '#FFFF00' },
-		{ name: 'grønn', hex: '#32CD32' },
-		{ name: 'rosa', hex: '#FFB6C1' }
+		{ name: 'Blå', hex: '#1E90FF' },
+		{ name: 'Gul', hex: '#FFFF00' },
+		{ name: 'Grønn', hex: '#32CD32' },
+		{ name: 'Rosa', hex: '#FFB6C1' }
 	];
 
 	new Lottery({ 
