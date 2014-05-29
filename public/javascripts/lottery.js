@@ -107,7 +107,7 @@ var Lottery = {
 			});
 		}, 3000);
 
-		var winningTicketHtml = $('<li><a style="background-color: ' + colorHex + ';" href="javascript:;">' + Lottery.capitaliseFirstLetter(winningTicket) + '<i class="fa fa-times"></i></a></li>');
+		var winningTicketHtml = $('<li><a style="background-color: ' + colorHex + ';" href="javascript:;">' + Lottery.capitaliseFirstLetter(winningTicket) + '</a></li>');
 		$('#draw-results').prepend(winningTicketHtml);
 	},
 
