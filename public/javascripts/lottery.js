@@ -51,7 +51,7 @@ var Lottery = {
 			$('#draw-result-wrap #draw-result img').show();
 
 			// show big overlay
-			$('#draw-result-wrap').show();
+			$('#draw-result-wrap').show().css('height', $(window).height());
 			$('#draw-result').css('margin-top', (($('#draw-result-wrap').height() - $('#draw-result').outerHeight()) / 2 - 80) + 'px');
 
 			var url = $('#trigger-draw').data('url') + '?' + Date.now();

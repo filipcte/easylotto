@@ -23,7 +23,6 @@ router.get('/admin/lottery/:id/seed888', function(req, res) {
 
 	Lottery.findById(lotteryId, function(err, lottery) {
 		var abc_str = "abcdefghijklmnopqrstuvwxyzæøå";
-		//var abc_str = "abc";
 	 	var abc = abc_str.toUpperCase().split("");
 	 	
 		_(lottery.ticket_colors).forEach(function(col) {
@@ -51,10 +50,6 @@ router.get('/admin/lottery/:id/seed888', function(req, res) {
 					var lastSoldTicketId = lottery.tickets_sold[lottery.tickets_sold.length - 1].id;
 
 					// add ticket in the drawing pool
-					// var number = numberRange.split('-');
-					// var numberMin = number[0];
-					// var numberMax = number[1];
-
 					// loop through numbers in the range and add individual tickets in the drawing pool
 					for (i = 1; i <= 100; i++) {
 						var description = descWithoutNumber + ' ' + i;
