@@ -61,14 +61,13 @@ a.delete {
         margin-top: 5px;
         @include single-transition(all, .2s, ease);
       }
-      &:hover {
-        background: red !important;
-        i {
-          opacity: 1;
-        }
-      }
     }
   }
-  
+  &.is-manageable a:hover {
+    background: red !important;
+    i {
+      opacity: 1;
+    }
+  }
 }
 

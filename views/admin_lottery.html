@@ -55,7 +55,7 @@
           </form>
 
           <h3>Sold tickets</h3>
-          <ul id="sold-tickets-list" class="small-block-grid-5 colorful-tickets">
+          <ul id="sold-tickets-list" class="small-block-grid-5 colorful-tickets is-manageable">
           {% for ticket in lottery.tickets_sold %}
             <li><a style="background-color: {{ ticket.color_hex }};" href="/admin/lottery/{{ lottery.id }}/remove-ticket/{{ ticket.id }}">{{ ticket.description }}<i class="fa fa-times"></i></a></li>
           {% endfor %}
@@ -67,7 +67,7 @@
           <h3>Winners</h3>
           <ul id="draw-results" class="small-block-grid-5 colorful-tickets">
           {% for drawing in lottery.drawings %}
-            <li><a style="background-color: {{ drawing.color_hex }};" href="javascript:;">{{ drawing.winning_ticket }}<i class="fa fa-times"></i></a></li>
+            <li><a style="background-color: {{ drawing.color_hex }};" href="javascript:;">{{ drawing.winning_ticket }}</a></li>
           {% endfor %}
           </ul>
         </div>
