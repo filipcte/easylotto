@@ -131,13 +131,12 @@ var Lottery = {
 		}
 
 		$('#draw-result-wrap')
-			.hide()
+			//.hide()
 			.css('background-color', newColor)
-			.fadeIn('fast')		
+			//.fadeIn('fast')		
 			.each(function() {
 		    var redraw = this.offsetHeight;
 		  })
-			
 	},
 
 	capitaliseFirstLetter: function(string) {
