@@ -69,9 +69,6 @@
           {% for drawing in lottery.drawings %}
             <li><a style="background-color: {{ drawing.color_hex }};" href="javascript:;">{{ drawing.winning_ticket }}</a></li>
           {% endfor %}
-          {% for ticket in lottery.tickets_sold %}
-            <li><a style="background-color: {{ ticket.color_hex }};" href="/admin/lottery/{{ lottery.id }}/remove-ticket/{{ ticket.id }}">{{ ticket.description }}<i class="fa fa-times"></i></a></li>
-          {% endfor %}
           </ul>
         </div>
       </div>
