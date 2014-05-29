@@ -7,6 +7,8 @@ var User = mongoose.model('User');
 
 mongoose.connect('mongodb://localhost/lotto');
 
+///////////////////////////////
+
 // User seeder
 // TODO: remove this once signup is implemented
 router.get('/seed999', function(req, res) {
@@ -14,6 +16,56 @@ router.get('/seed999', function(req, res) {
 		res.send('ok');
 	});
 });
+	
+// Create tickets automatically
+router.get('/admin/lottery/:id/seed888', function(req, res) {
+	var lotteryId = req.params.id;
+
+	Lottery.findById(lotteryId, function(err, lottery) {
+		lottery.tickets_sold = [];
+		lottery.tickets_for_draw = [];
+		lottery.save();
+		
+		//var abc_str = "abcdefghijklmnopqrstuvwxyzæøå";
+		var abc_str = "abc";
+	 	var abc = abc_str.toUpperCase().split("");
+	 	
+		_(lottery.ticket_colors).forEach(function(col) {
+			_(abc).forEach(function(letter) {
+				for (i = 1; i <= 50; i++) {
+					//console.log(col.name+' '+letter+' '+i)
+					var color = col.name;
+					var colorHex = col.hex;
+					var numberRange = i;
+					var descWithoutNumber = strCapitalize(color) + ' ' + letter;
+					var soldTickets = [];
+					
+					// prepare new ticket
+					var newTicket = {
+						description: descWithoutNumber + ' ' + numberRange,
+						desc_without_number: descWithoutNumber,
+						color_hex: colorHex,
+						color: color,
+						letter: letter,
+						number: numberRange,
+						created_at: Date.now()
+					};
+					
+					lottery.tickets_sold.push(newTicket);
+
+					var lastSoldTicketId = lottery.tickets_sold[lottery.tickets_sold.length - 1].id;
+					// add ticket in the drawing pool
+					lottery.tickets_for_draw.push({ description: descWithoutNumber + ' ' + numberRange, sold_ticket_id: lastSoldTicketId });
+
+					lottery.save();
+				}
+			});		
+		});
+		res.send('done');
+	});
+});
+
+///////////////////////////////
 
 // login
 router.post('/login', function(req, res) {
@@ -82,9 +134,7 @@ router.get('/admin/lottery/:id', function(req, res) {
 		if (typeof lottery == 'undefined') {
 			res.redirect('/admin');
 		}
-		
-		console.log(lottery)
-
+		console.log(lottery.tickets_for_draw.length)
 		res.render('admin_lottery', { lottery: lottery })
 	}); 
 });
@@ -194,7 +244,7 @@ router.post('/admin/lottery/:id/sell', function(req, res) {
 		var color = req.body.color;
 		var letter = req.body.letter.toUpperCase();
 		var numberRange = req.body.number;
-		var descWithoutNumber = color + ' ' + letter;
+		var descWithoutNumber = strCapitalize(color) + ' ' + letter;
 		var soldTickets = [];
 		var colorHex = '#eeeeee';
 
@@ -275,3 +325,7 @@ router.get('/admin/lottery/:id/remove-ticket/:ticket_id', function(req, res) {
 });
 
 module.exports = router;
+
+function strCapitalize(string) {
+	return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+}
