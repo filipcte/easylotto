@@ -98,14 +98,17 @@ var Lottery = {
 					// change overlay bg color according to winning ticket's color
 					if (i == 0) {
 						Lottery.changeBgColor(part);
-					}
+					}	
 
+					// allow for other draws to take place
 					if (i == ticket_parts.length - 1) {
-						Lottery.drawInProgress = false;
+						setTimeout(function() {
+							Lottery.drawInProgress = false;	
+						}, 5000);
 					}
 				}, 1500 * (i + 1));
 			});
-		}, 3000);
+		}, 1800);
 
 		var winningTicketHtml = $('<li><a style="background-color: ' + colorHex + ';" href="javascript:;">' + Lottery.capitaliseFirstLetter(winningTicket) + '</a></li>');
 		$('#draw-results').prepend(winningTicketHtml);
