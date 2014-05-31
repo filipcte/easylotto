@@ -16,6 +16,16 @@ router.get('/seed999', function(req, res) {
 		res.send('ok');
 	});
 });
+
+router.get('/admin/lottery/:id/addwhite', function(req, res) {
+	var lotteryId = req.params.id;
+
+	Lottery.findById(lotteryId, function(err, lottery) {
+		lottery.ticket_colors.push({ name: 'Hvit', hex: '#FFFFFF' });
+		lottery.save();
+		res.send('done');
+	});
+});
 	
 // Create tickets automatically
 router.get('/admin/lottery/:id/seed888', function(req, res) {
@@ -27,7 +37,6 @@ router.get('/admin/lottery/:id/seed888', function(req, res) {
 	 	
 		_(lottery.ticket_colors).forEach(function(col) {
 			_(abc).forEach(function(letter) {
-					//console.log(col.name+' '+letter+' '+i)
 					var color = col.name;
 					var colorHex = col.hex;
 					var numberRange = '1-100';
@@ -110,7 +119,8 @@ router.post('/admin/lottery/create', function(req, res) {
 		{ name: 'Blå', hex: '#1E90FF' },
 		{ name: 'Gul', hex: '#FFFF00' },
 		{ name: 'Grønn', hex: '#32CD32' },
-		{ name: 'Rosa', hex: '#FFB6C1' }
+		{ name: 'Rosa', hex: '#FFB6C1' },
+		{ name: 'Hvit', hex: '#FFFFFF' }
 	];
 
 	new Lottery({ 
@@ -131,7 +141,7 @@ router.get('/admin/lottery/:id', function(req, res) {
 		if (typeof lottery == 'undefined') {
 			res.redirect('/admin');
 		}
-		console.log(lottery.tickets_for_draw.length)
+		
 		res.render('admin_lottery', { lottery: lottery })
 	}); 
 });

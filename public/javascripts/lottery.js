@@ -126,8 +126,8 @@ var Lottery = {
 		else if (color == 'Grønn') {
 			newColor = '#32CD32';
 		}
-		else if (color == 'White') {
-			newColor = '#fff';
+		else if (color == 'Hvit') {
+			newColor = '#ffffff';
 		}
 		else if (color == 'Rosa') {
 			newColor = '#FFB6C1';

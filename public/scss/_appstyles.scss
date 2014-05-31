@@ -61,8 +61,14 @@ a.delete {
         margin-top: 5px;
         @include single-transition(all, .2s, ease);
       }
+
+      &.white-ticket {
+        border: 1px solid #ccc;
+        color: #333;
+      }
     }
   }
+
   &.is-manageable a:hover {
     background: red !important;
     i {
