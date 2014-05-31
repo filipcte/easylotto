@@ -76,7 +76,7 @@ var Lottery = {
 	showSoldTickets: function(tickets) {
 		var ticketsHtml = '';
 		$.each(tickets, function(i, ticket) {
-			ticketsHtml += '<li><a style="background-color: ' + ticket.color_hex + ';" href="javascript:;">' + Lottery.capitaliseFirstLetter(ticket.description) + '<i class="fa fa-times"></i></a></li>';
+			ticketsHtml += '<li><a ' + (ticket.color_hex == '#FFFFFF' ? 'class="white-ticket"' : '') + ' style="background-color: ' + ticket.color_hex + ';" href="javascript:;">' + Lottery.capitaliseFirstLetter(ticket.description) + '<i class="fa fa-times"></i></a></li>';
 		});
 		$('ul#sold-tickets-list').append($(ticketsHtml));
 	},
@@ -110,7 +110,7 @@ var Lottery = {
 			});
 		}, 1800);
 
-		var winningTicketHtml = $('<li><a style="background-color: ' + colorHex + ';" href="javascript:;">' + Lottery.capitaliseFirstLetter(winningTicket) + '</a></li>');
+		var winningTicketHtml = $('<li><a ' + (colorHex == '#FFFFFF' ? 'class="white-ticket"' : '') + ' style="background-color: ' + colorHex + ';" href="javascript:;">' + Lottery.capitaliseFirstLetter(winningTicket) + '</a></li>');
 		$('#draw-results').prepend(winningTicketHtml);
 	},
 
