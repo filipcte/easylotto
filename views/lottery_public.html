@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+
+{% block lottery_name %}
+<section class="top-bar-section">
+  <ul class="right">
+    <li class="divider"></li>
+    <li><a href="/admin/lottery/{{ lottery.id }}">{{ lottery.name }}</a></li>
+  </ul>
+</section>
+{% endblock %}
+
+
+{% block content %}
+  
+  <div class="row">
+    <div class="small-12 columns">
+      
+
+    </div>
+  </div>
+  
+
+{% endblock %}

@@ -331,6 +331,21 @@ router.get('/admin/lottery/:id/remove-ticket/:ticket_id', function(req, res) {
 	});
 });
 
+// view public lottery page
+router.get('/lottery/:id', function(req, res) {
+
+	var lotteryId = req.params.id;
+
+	Lottery.findById(lotteryId, function(err, lottery) {
+		if (typeof lottery == 'undefined') {
+			res.redirect('/');
+		}
+		
+		res.render('lottery_public', { lottery: lottery });
+	}); 
+});
+
+
 module.exports = router;
 
 function strCapitalize(string) {

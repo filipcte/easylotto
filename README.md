@@ -1,14 +1,26 @@
-Lotto
+EasyLotto - node.js based lottery management software
 =====
+
 
 ## Install
 
-1. git clone git@github.com:filipcte/lotto.git lotto
-2. cd lotto
-3. npm install
-4. npm install -g bower
-5. bower install
-6. npm install -g grunt-cli
-7. grunt comp (after 3-4 seconds, close it)
-8. node server.js (keep it running)
-9. open http://localhost:3000/admin/ in the browser (locally)
+1. Clone repository
+`$ git clone git@github.com:filipcte/easylotto.git easylotto`
+
+2. Install dependencies
+```
+$ cd easylotto
+$ npm install
+$ npm install -g bower
+$ bower install
+$ npm install -g grunt-cli
+```
+
+3. Run Grunt (just SASS-to-CSS compiling for now)
+`$ grunt comp (keep it running)`
+
+4. Start node.js server
+`$ node server.js`
+
+5. Open app in the browser
+`http://localhost:3000/admin/`
