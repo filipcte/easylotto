@@ -3,7 +3,7 @@ EasyLotto - Node.js lottery software
 
 This is a small lottery management app that enables anyone to host their own lottery and have a nice real-life event to do the drawings and determine winners. 
 
-It's built with **Node.js + Express + Mongoose** and it was my first Node project, so there are already many things I would rearchitect in terms of the MVC-like architecture. But hey, it works neatly! :)
+It's built with **Node.js + Express + Mongoose** and it was our (**filipcte** and **dani-z**) first Node project, so there are already many things I would rearchitect in terms of the MVC-like architecture. But hey, it works neatly! :)
 
 ## Features
 	
