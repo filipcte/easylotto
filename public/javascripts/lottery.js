@@ -117,19 +117,19 @@ var Lottery = {
 	changeBgColor: function(color) {
 		var newColor = this.defaultDrawBgColor;
 
-		if (color == 'Blå') {
+		if (color == 'Blue') {
 			newColor = '#1E90FF';
 		}
-		else if (color == 'Gul') {
+		else if (color == 'Yellow') {
 			newColor = '#FFFF00';
 		}
-		else if (color == 'Grønn') {
+		else if (color == 'Green') {
 			newColor = '#32CD32';
 		}
-		else if (color == 'Hvit') {
+		else if (color == 'White') {
 			newColor = '#ffffff';
 		}
-		else if (color == 'Rosa') {
+		else if (color == 'Pink') {
 			newColor = '#FFB6C1';
 		}
 

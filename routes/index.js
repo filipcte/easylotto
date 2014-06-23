@@ -8,24 +8,6 @@ var User = mongoose.model('User');
 mongoose.connect('mongodb://localhost/lotto');
 
 ///////////////////////////////
-
-// User seeder
-// TODO: remove this once signup is implemented
-router.get('/seed999', function(req, res) {
-	User.create({ email: 'kes@teknograd.no', password: User.generatePassHash('passw0rd')}, function(err, user) {
-		res.send('ok');
-	});
-});
-
-router.get('/admin/lottery/:id/addwhite', function(req, res) {
-	var lotteryId = req.params.id;
-
-	Lottery.findById(lotteryId, function(err, lottery) {
-		lottery.ticket_colors.push({ name: 'Hvit', hex: '#FFFFFF' });
-		lottery.save();
-		res.send('done');
-	});
-});
 	
 // Create tickets automatically
 router.get('/admin/lottery/:id/seed888', function(req, res) {
@@ -116,11 +98,11 @@ router.post('/admin/lottery/create', function(req, res) {
 
 	var lotteryName = req.body.lottery_name;
 	var defaultColors = [
-		{ name: 'Blå', hex: '#1E90FF' },
-		{ name: 'Gul', hex: '#FFFF00' },
-		{ name: 'Grønn', hex: '#32CD32' },
-		{ name: 'Rosa', hex: '#FFB6C1' },
-		{ name: 'Hvit', hex: '#FFFFFF' }
+		{ name: 'Blue', hex: '#1E90FF' },
+		{ name: 'Yellow', hex: '#FFFF00' },
+		{ name: 'Green', hex: '#32CD32' },
+		{ name: 'Pink', hex: '#FFB6C1' },
+		{ name: 'White', hex: '#FFFFFF' }
 	];
 
 	new Lottery({ 
