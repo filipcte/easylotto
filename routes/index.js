@@ -110,7 +110,7 @@ module.exports = function(app, passport) {
 	// admin page (lottery listing)
 	app.get('/admin', isLoggedIn, function(req, res) {
 
-		Lottery.find(function(err, lotteries, count) {
+		Lottery.find({user: req.user.id}, function(err, lotteries, count) {
 			res.render('admin', { lotteries: lotteries })
 		});
 
@@ -131,7 +131,7 @@ module.exports = function(app, passport) {
 		new Lottery({ 
 			name: lotteryName,
 			ticket_colors: defaultColors,
-			// user: req.user.id
+			user: req.user.id
 		}).save(function(err, lottery, count) {
 			res.redirect('/admin/lottery/' + lottery.id);
 		});
