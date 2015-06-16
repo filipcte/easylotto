@@ -48,12 +48,6 @@ app.use(function(req, res, next) {
     next();
 });
 
-// // Give Views/Layouts direct access to session data.
-// app.use(function(req, res, next){
-// res.locals.session = req.session;
-// next();
-// });
-
 require('./routes/index.js')(app, passport);
 
 /// catch 404 and forward to error handler

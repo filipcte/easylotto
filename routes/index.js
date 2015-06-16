@@ -130,15 +130,15 @@ module.exports = function(app, passport) {
 
 		new Lottery({ 
 			name: lotteryName,
-			ticket_colors: defaultColors
+			ticket_colors: defaultColors,
+			// user: req.user.id
 		}).save(function(err, lottery, count) {
 			res.redirect('/admin/lottery/' + lottery.id);
-		});  
+		});
 	});
 
 	// view lottery page
 	app.get('/admin/lottery/:id', isLoggedIn, function(req, res) {
-		//if (!req.session.user) { res.redirect('/'); }
 
 		var lotteryId = req.params.id;
 
