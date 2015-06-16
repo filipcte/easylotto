@@ -1,19 +1,24 @@
 require('./models/user.model.js');
 require('./models/lottery.model.js');
 
-var config = require('./config/config');
-
 var express = require('express');
+var app = express();
+var mongoose = require('mongoose');
 var session = require('express-session');
+var passport = require('passport');
+var flash    = require('connect-flash');
+
 var path = require('path');
 var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var mongo = require('mongodb');
 var swig = require('swig');
 
 var app = express();
+
+require('./config/passport')(passport); // pass passport for configuration
+
 
 // view engine setup
 app.engine('html', swig.renderFile);
@@ -30,17 +35,26 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(session({ secret: 'superdupersecret' }))
+
+// required for passport
+app.use(session({ secret: 'superdupersecret' }));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
 
 // global user session for views
 app.use(function(req, res, next) { 
-    res.locals.userAuth = req.session.user || '';
+    res.locals.isLoggedIn = req.isAuthenticated();
     next();
 });
 
-var routes = require('./routes/index');
-app.use('/', routes);
+// // Give Views/Layouts direct access to session data.
+// app.use(function(req, res, next){
+// res.locals.session = req.session;
+// next();
+// });
 
+require('./routes/index.js')(app, passport);
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {

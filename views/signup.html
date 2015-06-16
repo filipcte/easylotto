@@ -1,0 +1,34 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="auth">
+  <div class="row">
+    <div class="small-6 small-centered columns">
+      <h2>Signup</h2>
+      <hr>
+      <form method="post" action="/signup">
+        <div class="row">
+          <div class="small-12 columns">
+            <label>
+              Email
+              <input type="text" name="email" placeholder="Email">
+            </label>
+          </div>
+          <div class="small-12 columns">
+            <label>
+              Password
+              <input type="password" name="password" placeholder="Password">
+            </label>
+          </div>
+          <div class="small-12 columns">
+            <input type="submit" value="Signup" class="button expand" />
+          </div>
+        </div>
+      </form>
+      <p>
+        <small>Have an account already? <a href="/login">Login</a></small>
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock %}

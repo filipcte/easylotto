@@ -1,0 +1,37 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="auth">
+  <div class="row">
+    <div class="small-6 small-centered columns">
+      {% if (message.length > 0) %}
+          <div class="alert-box alert">{{ message }}</div>
+      {% endif %}
+      <h2>Lgin</h2>
+      <hr>
+      <form method="post" action="/login">
+        <div class="row">
+          <div class="small-12 columns">
+            <label>
+              Email
+              <input type="text" name="email" placeholder="Email">
+            </label>
+          </div>
+          <div class="small-12 columns">
+            <label>
+              Password
+              <input type="password" name="password" placeholder="Password">
+            </label>
+          </div>
+          <div class="small-12 columns">
+            <input type="submit" value="Login" class="button expand" />
+          </div>
+        </div>
+      </form>
+      <p>
+        <small>Don't have an account? <a href="/signup">Signup</a></small>
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock %}
