@@ -6,7 +6,8 @@ This is a small lottery management app that enables anyone to host their own lot
 It's built with **Node.js + Express + Mongoose** and it was our (**filipcte** and **dani-z**) first Node project, so there are already many things I would rearchitect in terms of the MVC-like architecture. But hey, it works neatly! :)
 
 ## Features
-	
+
+* Multiple users, each with their own lotteries	
 * Create and manage any number of lotteries
 * Manually add/remove sold tickets (tickets are identified by Color (blue, yellow, green, white, pink), Letter (A-Z) and Number (1-100))
 * A drawing screen that draws tickets randomly and shows them on screen
@@ -16,7 +17,6 @@ It's built with **Node.js + Express + Mongoose** and it was our (**filipcte** an
 
 * Add a public side to each lottery to sell tickets, automating that process
 * On the public side, show drawings in real-time to potential watchers
-* Implement the whole SaaS thing, starting with a marketing site and signup/signin functionality (which is actually partially done)
 
 ## Dependencies
 
@@ -31,7 +31,7 @@ It's built with **Node.js + Express + Mongoose** and it was our (**filipcte** an
 ```
 $ cd easylotto
 $ npm install
-$ npm install -g bower
+$ (sudo) npm install -g bower
 $ bower install
 $ npm install -g grunt-cli
 ```
@@ -39,8 +39,11 @@ $ npm install -g grunt-cli
 3. Run Grunt (just SASS-to-CSS compiling for now)
 `$ grunt comp`
 
-4. Start node.js server
+4. Start Mongodb
+`$ sudo mongod` (on OS X at least)
+
+5. Start node.js server
 `$ node server.js`
 
-5. Open app in the browser
+6. Open app in the browser
 `http://localhost:3000/admin/`

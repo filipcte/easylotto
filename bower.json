@@ -6,6 +6,7 @@
   "private": true,
   "dependencies": {
     "foundation": "zurb/bower-foundation",
-    "font-awesome": "~4.1.0"
+    "font-awesome": "~4.1.0",
+    "jquery.hotkeys": "*"
   }
 }

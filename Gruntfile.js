@@ -8,11 +8,12 @@ module.exports = function(grunt) {
 
 		sass: {
 			options: {
-				includePaths: ['<%= app %>/components/foundation/scss']
+				includePaths: ['<%= app %>/components/foundation/scss'],
+				sourceMap: true
 			},
 			dist: {
 				options: {
-					outputStyle: 'extended'
+					outputStyle: 'compressed'
 				},
 				files: {
 					'<%= app %>/stylesheets/style.css': '<%= app %>/scss/style.scss'
