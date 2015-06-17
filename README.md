@@ -31,7 +31,7 @@ It's built with **Node.js + Express + Mongoose** and it was our (**filipcte** an
 ```
 $ cd easylotto
 $ npm install
-$ npm install -g bower
+$ (sudo) npm install -g bower
 $ bower install
 $ npm install -g grunt-cli
 ```
@@ -39,8 +39,11 @@ $ npm install -g grunt-cli
 3. Run Grunt (just SASS-to-CSS compiling for now)
 `$ grunt comp`
 
-4. Start node.js server
+4. Start Mongodb
+`$ sudo mongod` (on OS X at least)
+
+5. Start node.js server
 `$ node server.js`
 
-5. Open app in the browser
+6. Open app in the browser
 `http://localhost:3000/admin/`
