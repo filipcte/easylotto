@@ -29,11 +29,11 @@ node_modules
 **/.sass-cache/*
 
 # Compiled CSS
-/public/stylesheets/*
+#/public/stylesheets/*
 
 # Components
-**/public/components
-**/public/components/*
+#**/public/components
+#**/public/components/*
 
 # MAC related
 */.DS_Store
