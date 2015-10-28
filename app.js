@@ -37,7 +37,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // required for passport
-app.use(session({ secret: 'superdupersecret' }));
+app.use(session({ secret: 'superdupersecret', saveUninitialized: true, resave: false }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
