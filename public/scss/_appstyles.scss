@@ -62,6 +62,13 @@
 // Main header
 .top-bar {
   margin-bottom: 20px;
+  h1 {
+    width: 50%;
+    padding-top: 4px;
+    img {
+      display: block;
+    }
+  }
 }
 
 #draw-wrapper {
